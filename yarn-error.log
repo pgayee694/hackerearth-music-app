@@ -1,0 +1,31 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Piyush\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D prettier
+
+PATH: 
+  C:\Python27\;C:\Python27\Scripts;C:\Program Files\IBM\ILOG\CPLEX_Studio129\opl\bin\x64_win64;C:\Program Files\IBM\ILOG\CPLEX_Studio129\opl\oplide\;C:\Program Files\IBM\ILOG\CPLEX_Studio129\cplex\bin\x64_win64;C:\Program Files\IBM\ILOG\CPLEX_Studio129\cpoptimizer\bin\x64_win64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Haskell\bin;C:\Program Files\Haskell Platform\8.6.3\lib\extralibs\bin;C:\Program Files\Haskell Platform\8.6.3\bin;C:\Program Files\Python36\Scripts\;C:\Program Files\Python36\;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\PuTTY\;C:\Program Files\MiKTeX 2.9\miktex\bin\x64\;C:\Program Files\Git\cmd;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Calibre2\;C:\Program Files\Haskell Platform\8.6.3\mingw\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\Git LFS;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\lua;C:\Users\Piyush\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\Piyush\AppData\Local\Programs\Python\Python37\;C:\Users\Piyush\AppData\Roaming\cabal\bin;C:\Users\Piyush\AppData\Roaming\local\bin;C:\Users\Piyush\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:/Program Files/Java/jdk1.8.0_144\bin;C:\Users\Piyush\AppData\Roaming\npm;C:\Users\Piyush\Documents\CS_Projects\opencv\build\x64\vc15\bin;;C:\Users\Piyush\AppData\Local\Microsoft\WindowsApps
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  12.14.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: C:\Users\Piyush\Documents\CS_Projects\hackerearth-music-app\package.json: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at C:\Users\Piyush\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\Piyush\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\Piyush\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+
+npm manifest: 
+  
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
