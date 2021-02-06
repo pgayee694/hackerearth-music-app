@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "lib": ["esnext"],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
