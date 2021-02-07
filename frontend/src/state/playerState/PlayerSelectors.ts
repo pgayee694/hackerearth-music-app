@@ -1,5 +1,4 @@
 import { createStateSelectors } from '../utils/createStateSelectors';
-import { PlayerState } from './PlayerState';
 
 const { createPropSelector } = createStateSelectors('player');
 
