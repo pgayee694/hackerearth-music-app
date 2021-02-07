@@ -1,0 +1,7 @@
+{
+  "auth": "/home",
+  "clientId": "",
+  "api": {
+    "local": "http://localhost:3001"
+  }
+}
