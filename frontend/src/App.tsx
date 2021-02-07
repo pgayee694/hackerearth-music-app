@@ -1,7 +1,7 @@
-import './App.css'
-import { Box, ChakraProvider } from '@chakra-ui/react'
-import React from 'react'
-import { Home } from './home/Home'
+import './App.css';
+import { Box, ChakraProvider } from '@chakra-ui/react';
+import React from 'react';
+import { Home } from './home/Home';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <Home />
       </Box>
     </ChakraProvider>
-  )
+  );
 }
 
-export default App
+export default App;
