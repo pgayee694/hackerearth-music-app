@@ -1,4 +1,12 @@
-import { Box, Button, Center, Flex, Heading } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  VStack,
+  Text,
+} from '@chakra-ui/react';
 import * as config from '../config.json';
 import React from 'react';
 import { redirect } from '../utils/redirect';
@@ -19,12 +27,20 @@ export function Landing() {
   return (
     <Box className="Landing" width="100%" height="100%">
       <Flex direction="column" height="100%" flexFlow="column">
-        <Heading className={styles.heading}>Vibe</Heading>
-        <Center height="100%">Vibe</Center>
-        <Center height="96px" margin="24px">
-          <Button aria-label="Get Started" onClick={onGetStartedClicked}>
-            Get Started
-          </Button>
+        <Center height="100%">
+          <VStack spacing="48px">
+            <Heading className={styles.heading} as="h1" size="4xl">
+              vibe
+            </Heading>
+            <Text>A musical odyssey guided by your surroundings.</Text>
+            <Button
+              aria-label="Get Started"
+              onClick={onGetStartedClicked}
+              isFullWidth
+            >
+              Get Started
+            </Button>
+          </VStack>
         </Center>
       </Flex>
     </Box>
