@@ -1,31 +1,27 @@
 export enum Markets {
   US = 'US',
-  US_ISLANDS = 'UM',
-  CANADA = 'CA',
+  US_islands = 'UM',
+  Canada = 'CA',
 }
 
 export enum Genres {
-  CLASSICAL = 'classical',
-  COUNTRY = 'country',
-  ROCK = 'rock',
+  Classic = 'classical',
+  Country = 'country',
+  Rock = 'rock',
 }
 
 export enum RestrictionReason {
-  MARKET = 'market',
-  PRODUCT = 'product',
-  EXPLICIT = 'explicit',
+  Market = 'market',
+  Product = 'product',
+  Explicity = 'explicit',
 }
 
 export class QueueSongsRequest {
-  authCode: string;
-  longitude: number;
-  latitude: number;
-
-  constructor(authCode: string, longitude: number, latitude: number) {
-    this.authCode = authCode;
-    this.longitude = longitude;
-    this.latitude = latitude;
-  }
+  constructor(
+    public authCode: string,
+    public longitude: number,
+    public latitude: number,
+  ) {}
 }
 
 export interface RecommendationsRequest {
