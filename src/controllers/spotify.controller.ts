@@ -12,8 +12,8 @@ import { SpotifyService } from '../services/spotify.service';
 @Controller('spotify')
 export class SpotifyController {
   constructor(
-    @Inject(SpotifyService) private spotifyService: SpotifyService,
-    @Inject(WeatherService) private readonly weatherService: WeatherService
+    @Inject(SpotifyService) private readonly spotifyService: SpotifyService,
+    @Inject(WeatherService) private readonly weatherService: WeatherService,
   ) {}
 
   @Get()
@@ -29,7 +29,7 @@ export class SpotifyController {
     @Body() params: QueueSongsRequest,
   ): Observable<RecommendationsResponse> {
     const request: RecommendationsRequest = {
-      seed_genres: [Genres.ROCK], // TODO: base this off the weather service
+      seed_genres: [Genres.Rock], // TODO: base this off the weather service
       // TODO calculate other parameters
     };
 
