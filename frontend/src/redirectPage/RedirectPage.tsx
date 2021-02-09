@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { RouteProps, useHistory } from 'react-router-dom';
@@ -29,5 +30,5 @@ export function RedirectPage({ location }: RouteProps) {
     }
   }, []);
 
-  return null;
+  return <Box className="Landing" width="100%" height="100%" p="2" />;
 }

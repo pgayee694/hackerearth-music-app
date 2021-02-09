@@ -4,20 +4,24 @@ import { ClientActions } from '../ClientActions';
 import { SpotifyMetadataResponse } from '@local/shared';
 import { redirect } from '../../../utils/redirect';
 import * as config from '../../../config.json';
+import { Attempt } from '../../../utils/Attempt';
 
 export function* authorize() {
-  const { clientId }: SpotifyMetadataResponse = yield call(() =>
+  const [
+    metadata,
+    metadataError,
+  ]: Attempt<SpotifyMetadataResponse> = yield call(() =>
     request('/spotify/metadata')
   );
 
-  if (!clientId) {
+  if (metadataError || !metadata.clientId) {
     return yield put(ClientActions.clientIdRequestFailed());
   }
 
-  yield put(ClientActions.clientIdRequestSucceeded(clientId));
+  yield put(ClientActions.clientIdRequestSucceeded(metadata.clientId));
 
   redirect(config.auth, {
-    client_id: clientId,
+    client_id: metadata.clientId,
     redirect_uri: `${window.location.origin}/redirect`,
     response_type: 'token',
     scope: ['app-remote-control', 'user-read-playback-state'],

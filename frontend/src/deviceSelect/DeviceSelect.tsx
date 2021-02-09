@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ClientActions } from '../state/clientState/ClientActions';
 import { ClientSelectors } from '../state/clientState/ClientSelectors';
 
+import styles from './DeviceSelect.module.css';
+
 export function DeviceSelect() {
   const devices = useSelector(ClientSelectors.getDevices);
   const hasSelectedDevice = useSelector(ClientSelectors.hasSelectedDevice);
@@ -22,7 +24,7 @@ export function DeviceSelect() {
 
   return (
     <Modal isOpen={!hasSelectedDevice} isCentered size="lg" onClose={() => {}}>
-      <ModalOverlay />
+      <ModalOverlay className={styles.overlay} />
       <ModalContent m="2">
         <ModalHeader textAlign="center">Select a device</ModalHeader>
         <ModalBody>

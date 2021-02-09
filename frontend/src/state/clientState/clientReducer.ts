@@ -32,6 +32,11 @@ export function clientReducer(
         ...state,
         selectedDeviceId: action.payload,
       };
+    case ClientActionType.LocationApproved:
+      return {
+        ...state,
+        location: action.payload,
+      };
     case ClientActionType.ClientAuthorized:
       const { accessToken, tokenType, expiresIn } = action.payload;
 
@@ -41,6 +46,7 @@ export function clientReducer(
           accessToken,
           tokenType,
           expiresIn,
+          timestamp: Date.now(),
         },
       };
     default:

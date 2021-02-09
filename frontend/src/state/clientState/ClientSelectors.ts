@@ -9,9 +9,11 @@ export class ClientSelectors {
   static readonly isFetchingClientId = createPropSelector('isFetchingClientId');
   static readonly getDevices = createPropSelector('devices');
   static readonly getSelectedDeviceId = createPropSelector('selectedDeviceId');
+  static readonly getLocation = createPropSelector('location');
 
-  static readonly isLoggedIn = createSelector(ClientSelectors.getAuth, (auth) =>
-    Boolean(auth)
+  static readonly isLoggedIn = createSelector(
+    ClientSelectors.getAuth,
+    (auth) => auth && Date.now() < auth.timestamp + auth.expiresIn * 1000
   );
 
   static readonly hasSelectedDevice = createSelector(
