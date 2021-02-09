@@ -4,6 +4,10 @@ export interface ClientState {
     tokenType: string;
     expiresIn: number;
   };
+  isFetchingClientId: boolean;
+  clientId?: string;
 }
 
-export const defaultClientState: ClientState = {};
+export const defaultClientState: ClientState = {
+  isFetchingClientId: false,
+};

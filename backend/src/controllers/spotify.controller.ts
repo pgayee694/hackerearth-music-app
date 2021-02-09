@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { WeatherService } from 'src/services/weather.service';
+import { WeatherService } from '../services/weather.service';
 import {
   Genres,
   QueueSongsRequest,
@@ -11,7 +11,7 @@ import { SpotifyService } from '../services/spotify.service';
 
 @Controller('spotify')
 export class SpotifyController {
-  constructor(
+  public constructor(
     @Inject(SpotifyService) private readonly spotifyService: SpotifyService,
     @Inject(WeatherService) private readonly weatherService: WeatherService,
   ) {}
@@ -24,8 +24,13 @@ export class SpotifyController {
     });
   }
 
+  @Get('metadata')
+  public getMetadata(): string | null {
+    return this.spotifyService.getMetadata();
+  }
+
   @Post('queue')
-  queueSongs(
+  public queueSongs(
     @Body() params: QueueSongsRequest,
   ): Observable<RecommendationsResponse> {
     const request: RecommendationsRequest = {

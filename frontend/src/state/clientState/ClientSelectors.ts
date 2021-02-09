@@ -1,5 +1,4 @@
 import { createStateSelectors } from '../utils/createStateSelectors';
-import { ClientState } from './ClientState';
 import { createSelector } from '@reduxjs/toolkit';
 
 const { createPropSelector } = createStateSelectors('client');

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { RouteProps } from 'react-router-dom';
+import { RouteProps, useHistory } from 'react-router-dom';
 import { ClientActions } from '../state/clientState/ClientActions';
 import { extractHashValues } from '../utils/extractHashValues';
 import { isValidAuthResponse } from '../utils/isValidAuthResponse';
 
-export function Redirect({ location }: RouteProps) {
+export function RedirectPage({ location }: RouteProps) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     if (!location?.hash) {
@@ -23,6 +24,8 @@ export function Redirect({ location }: RouteProps) {
           tokenType: hashValues.token_type,
         })
       );
+
+      history.push('/home');
     }
   }, []);
 

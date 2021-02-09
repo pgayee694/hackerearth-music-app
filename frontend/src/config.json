@@ -1,6 +1,5 @@
 {
-  "auth": "/home",
-  "clientId": "",
+  "auth": "https://accounts.spotify.com/authorize",
   "api": {
     "local": "http://localhost:3001"
   }

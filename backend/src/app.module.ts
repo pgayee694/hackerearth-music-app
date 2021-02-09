@@ -8,6 +8,11 @@ import { SpotifyService } from './services/spotify.service';
 @Module({
   imports: [HttpModule],
   controllers: [SpotifyController],
-  providers: [ConfigProvider, EnvironmentProvider, WeatherService, SpotifyService],
+  providers: [
+    ConfigProvider,
+    EnvironmentProvider,
+    WeatherService,
+    SpotifyService,
+  ],
 })
 export class AppModule {}

@@ -5,7 +5,7 @@ import { Player } from '../player/Player';
 import { PlayerActions } from '../state/playerState/PlayerActions';
 import { PlayerSelectors } from '../state/playerState/PlayerSelectors';
 
-export function Home() {
+export function HomePage() {
   const isPlayerOpen = useSelector(PlayerSelectors.isOpen);
   const dispatch = useDispatch();
 
