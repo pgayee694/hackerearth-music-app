@@ -21,12 +21,12 @@ export function DeviceSelect() {
   const dispatch = useDispatch();
 
   return (
-    <Modal isOpen={!hasSelectedDevice} onClose={() => {}}>
+    <Modal isOpen={!hasSelectedDevice} isCentered size="lg" onClose={() => {}}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent m="2">
         <ModalHeader textAlign="center">Select a device</ModalHeader>
         <ModalBody>
-          <List spacing="2">
+          <List spacing="3">
             {devices.map((device) => (
               <ListItem key={device.id}>
                 <Button
