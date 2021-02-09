@@ -17,6 +17,8 @@ export function RedirectPage({ location }: RouteProps) {
     const hashValues = extractHashValues(location.hash);
 
     if (isValidAuthResponse(hashValues)) {
+      history.push('/');
+
       dispatch(
         ClientActions.clientAuthorized({
           expiresIn: Number(hashValues.expires_in),
@@ -24,8 +26,6 @@ export function RedirectPage({ location }: RouteProps) {
           tokenType: hashValues.token_type,
         })
       );
-
-      history.push('/home');
     }
   }, []);
 

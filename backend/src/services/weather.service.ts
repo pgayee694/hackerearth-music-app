@@ -1,7 +1,7 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import * as Rx from 'rxjs/operators';
-import { Coordinate } from '../models/coordinate';
+import { Coordinate } from '@local/shared';
 import { Config } from '../models/config';
 import { ConfigToken } from '../providers/config.provider';
 import { EnvironmentToken } from '../providers/environment.provider';
@@ -15,7 +15,9 @@ export class WeatherService {
     @Inject(HttpService) private readonly http: HttpService,
   ) {}
 
-  getCurrentWeather(coordinate: Coordinate): Observable<WeatherResponse> {
+  public async getCurrentWeather(
+    coordinate: Coordinate,
+  ): Promise<WeatherResponse> {
     return this.http
       .get<WeatherResponse>(this.config.weatherApi, {
         params: {
@@ -28,6 +30,7 @@ export class WeatherService {
       .pipe(
         Rx.map((response) => response.data),
         Rx.catchError((err) => of({ err: err.toString() } as any)),
-      );
+      )
+      .toPromise();
   }
 }

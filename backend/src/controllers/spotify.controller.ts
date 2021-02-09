@@ -1,6 +1,4 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { WeatherService } from '../services/weather.service';
+import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
 import {
   Genres,
   QueueSongsRequest,
@@ -8,31 +6,30 @@ import {
   RecommendationsResponse,
 } from '../models/spotify';
 import { SpotifyService } from '../services/spotify.service';
+import { SpotifyDeviceResponse, SpotifyMetadataResponse } from '@local/shared';
 
 @Controller('spotify')
 export class SpotifyController {
   public constructor(
     @Inject(SpotifyService) private readonly spotifyService: SpotifyService,
-    @Inject(WeatherService) private readonly weatherService: WeatherService,
   ) {}
 
-  @Get()
-  public async test() {
-    return this.weatherService.getCurrentWeather({
-      lat: 40.843944,
-      lon: -97.270203,
-    });
-  }
-
   @Get('metadata')
-  public getMetadata(): string | null {
+  public async getMetadata(): Promise<SpotifyMetadataResponse> {
     return this.spotifyService.getMetadata();
   }
 
+  @Get('devices')
+  public async getDevices(
+    @Query('token') token: string,
+  ): Promise<SpotifyDeviceResponse[]> {
+    return this.spotifyService.getDevices(token);
+  }
+
   @Post('queue')
-  public queueSongs(
+  public async queueSongs(
     @Body() params: QueueSongsRequest,
-  ): Observable<RecommendationsResponse> {
+  ): Promise<RecommendationsResponse> {
     const request: RecommendationsRequest = {
       seed_genres: [Genres.Rock], // TODO: base this off the weather service
       // TODO calculate other parameters
