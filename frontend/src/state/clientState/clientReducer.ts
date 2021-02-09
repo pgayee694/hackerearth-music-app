@@ -6,6 +6,37 @@ export function clientReducer(
   action: AllClientActions
 ): ClientState {
   switch (action.type) {
+    case ClientActionType.GetStartedClicked:
+      return {
+        ...state,
+        isFetchingClientId: true,
+      };
+    case ClientActionType.ClientIdRequestFailed:
+      return {
+        ...state,
+        isFetchingClientId: false,
+      };
+    case ClientActionType.ClientIdRequestSucceeded:
+      return {
+        ...state,
+        isFetchingClientId: false,
+        clientId: action.payload,
+      };
+    case ClientActionType.DevicesFetched:
+      return {
+        ...state,
+        devices: action.payload,
+      };
+    case ClientActionType.DeviceSelected:
+      return {
+        ...state,
+        selectedDeviceId: action.payload,
+      };
+    case ClientActionType.LocationApproved:
+      return {
+        ...state,
+        location: action.payload,
+      };
     case ClientActionType.ClientAuthorized:
       const { accessToken, tokenType, expiresIn } = action.payload;
 
@@ -15,6 +46,7 @@ export function clientReducer(
           accessToken,
           tokenType,
           expiresIn,
+          timestamp: Date.now(),
         },
       };
     default:
