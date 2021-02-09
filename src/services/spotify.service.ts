@@ -1,6 +1,14 @@
-import { HttpService, Inject, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpService,
+  HttpStatus,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import * as Rx from 'rxjs/operators';
+import { EnvironmentToken } from 'src/providers/environment.provider';
 import {
   RecommendationsRequest,
   RecommendationsResponse,
@@ -8,18 +16,15 @@ import {
 
 @Injectable()
 export class SpotifyService {
-  constructor(@Inject(HttpService) private http: HttpService) {}
+  public constructor(
+    @Inject(HttpService) private readonly http: HttpService,
+    @Inject(EnvironmentToken) private readonly environment: NodeJS.ProcessEnv,
+  ) {}
 
-  getRecommendations(
+  public getRecommendations(
     authCode: string,
     seeds: RecommendationsRequest,
   ): Observable<RecommendationsResponse> {
-    const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + authCode,
-    };
-
     return this.http
       .get('https://api.spotify.com/v1/recommendations', {
         params: {
@@ -27,12 +32,18 @@ export class SpotifyService {
           seed_genres: seeds.seed_genres?.join(','),
         },
         headers: {
-          ...headers,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authCode}`,
         },
       })
       .pipe(
-        map((response) => response.data),
-        catchError((err) => of(err)),
+        Rx.map((response) => response.data),
+        Rx.catchError((err) => of(err)),
       );
+  }
+
+  public getMetadata(): string | null {
+    return this.environment.SPOTIFY_CLIENT_ID ?? null;
   }
 }

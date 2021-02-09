@@ -1,6 +1,6 @@
 export enum Markets {
-  US = 'US',
-  US_islands = 'UM',
+  Us = 'US',
+  UsIslands = 'UM',
   Canada = 'CA',
 }
 
