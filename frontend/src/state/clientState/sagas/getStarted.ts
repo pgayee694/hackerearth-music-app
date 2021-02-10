@@ -1,22 +1,24 @@
-import { call, put, select } from 'redux-saga/effects';
-import { request } from '../../../utils/request';
-import { ClientActions } from '../ClientActions';
-import { ClientSelectors } from '../ClientSelectors';
-import { ClientState } from '../ClientState';
 import { SpotifyDeviceResponse } from '@local/shared';
-import { getUserLocation } from '../../../utils/getUserLocation';
+import { call, put } from 'typed-redux-saga';
 import { Attempt } from '../../../utils/Attempt';
+import { getUserLocation } from '../../../utils/getUserLocation';
+import { request } from '../../../utils/request';
+import {
+  ClientActionOf,
+  ClientActions,
+  ClientActionType,
+} from '../ClientActions';
 
-export function* getStarted() {
-  const auth: NonNullable<ClientState['auth']> = yield select(
-    ClientSelectors.getAuth
+export function* getStarted({
+  payload,
+}: ClientActionOf<ClientActionType.ClientAuthorized>) {
+  const [devices] = yield* call(() =>
+    request<SpotifyDeviceResponse[]>(
+      `/spotify/devices?token=${payload.accessToken}`
+    )
   );
 
-  const [devices]: Attempt<SpotifyDeviceResponse[]> = yield call(() =>
-    request(`/spotify/devices?token=${auth.accessToken}`)
-  );
-
-  yield put(
+  yield* put(
     ClientActions.devicesFetched(
       devices.map(({ name, id }) => ({
         name,
@@ -28,13 +30,13 @@ export function* getStarted() {
   const [
     location,
     locationError,
-  ]: Attempt<GeolocationPosition> = yield call(() => getUserLocation());
+  ]: Attempt<GeolocationPosition> = yield* call(() => getUserLocation());
 
   if (locationError) {
-    return yield put(ClientActions.locationDenied());
+    return yield* put(ClientActions.locationDenied());
   }
 
-  yield put(
+  yield* put(
     ClientActions.locationApproved({
       lat: location.coords.latitude,
       lon: location.coords.longitude,
