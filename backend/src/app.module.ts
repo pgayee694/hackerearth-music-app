@@ -7,6 +7,9 @@ import { SpotifyService } from './services/spotify.service';
 import { VibeController } from './controllers/vibe.controller';
 import { VibeService } from './services/vibe.service';
 import { WeatherToGenreMapProvider } from './providers/weather-to-genre-map.provider';
+import { ParameterCalculatorService } from './services/parameter-calculator.service';
+import { SeasonToGenreMapProvider } from './providers/season-to-genre-map.provider';
+import { TimeOfDayToGenreMapProvider } from './providers/time-of-day-to-genre-map.provider';
 
 @Module({
   imports: [HttpModule],
@@ -18,6 +21,9 @@ import { WeatherToGenreMapProvider } from './providers/weather-to-genre-map.prov
     SpotifyService,
     VibeService,
     WeatherToGenreMapProvider,
+    SeasonToGenreMapProvider,
+    TimeOfDayToGenreMapProvider,
+    ParameterCalculatorService,
   ],
 })
 export class AppModule {}

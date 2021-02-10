@@ -31,5 +31,5 @@ export function RedirectPage({ location }: RouteProps) {
     }
   }, []);
 
-  return <Box className="Landing" width="100%" height="100%" p="2" />;
+  return <Box width="100%" height="100%" p="2" />;
 }

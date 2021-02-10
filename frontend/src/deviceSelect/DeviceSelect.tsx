@@ -1,5 +1,5 @@
 import {
-  Box,
+  Text,
   Button,
   List,
   ListItem,
@@ -29,6 +29,7 @@ export function DeviceSelect() {
         <ModalHeader textAlign="center">Select a device</ModalHeader>
         <ModalBody>
           <List spacing="3">
+            {!devices.length && <Text align="center">No devices found</Text>}
             {devices.map((device) => (
               <ListItem key={device.id}>
                 <Button
