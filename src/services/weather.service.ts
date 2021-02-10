@@ -29,7 +29,7 @@ export class WeatherService {
       })
       .pipe(
         Rx.map((response) => response.data),
-        Rx.catchError((err) => of({ err: err.toString() } as any)),
+        Rx.catchError(() => of([] as any)),
       )
       .toPromise();
   }

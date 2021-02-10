@@ -4,6 +4,7 @@ import {
   QueueSongsRequest,
   RecommendationsRequest,
   RecommendationsResponse,
+  SpotifyRequest,
 } from '../models/spotify';
 import { SpotifyService } from '../services/spotify.service';
 import { SpotifyDeviceResponse, SpotifyMetadataResponse } from '@local/shared';
@@ -36,5 +37,20 @@ export class SpotifyController {
     };
 
     return this.spotifyService.getRecommendations(params.authCode, request);
+  }
+
+  @Post('reset')
+  public async resetQueue(@Body() params: SpotifyRequest): Promise<void> {
+    this.spotifyService.resetQueue(params.authCode, params.deviceId);
+  }
+
+  @Post('resume')
+  public async resume(@Body() params: SpotifyRequest): Promise<void> {
+    this.spotifyService.resume(params.authCode, params.deviceId);
+  }
+
+  @Post('skip')
+  public async skip(@Body() params: SpotifyRequest): Promise<void> {
+    this.spotifyService.skip(params.authCode, params.deviceId);
   }
 }
