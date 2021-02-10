@@ -38,7 +38,7 @@ export function clientReducer(
         location: action.payload,
       };
     case ClientActionType.ClientAuthorized:
-      const { accessToken, tokenType, expiresIn } = action.payload;
+      const { accessToken, tokenType, expiresIn, timestamp } = action.payload;
 
       return {
         ...state,
@@ -46,7 +46,7 @@ export function clientReducer(
           accessToken,
           tokenType,
           expiresIn,
-          timestamp: Date.now(),
+          timestamp,
         },
       };
     default:

@@ -25,6 +25,7 @@ export function RedirectPage({ location }: RouteProps) {
           expiresIn: Number(hashValues.expires_in),
           accessToken: hashValues.access_token,
           tokenType: hashValues.token_type,
+          timestamp: Date.now(),
         })
       );
     }

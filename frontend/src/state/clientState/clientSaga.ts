@@ -1,9 +1,11 @@
 import { getStarted } from './sagas/getStarted';
 import { authorize } from './sagas/authorize';
-import { takeEvery } from 'redux-saga/effects';
-import { ClientActionType } from './ClientActions';
+import { AllClientActions, ClientActionType } from './ClientActions';
+import { createTypedTakeEvery } from '../utils/createTypedTakeEvery';
+
+const typedTakeEvery = createTypedTakeEvery<AllClientActions>();
 
 export function* clientSaga() {
-  yield takeEvery(ClientActionType.GetStartedClicked, authorize);
-  yield takeEvery(ClientActionType.ClientAuthorized, getStarted);
+  yield typedTakeEvery([ClientActionType.GetStartedClicked], authorize);
+  yield typedTakeEvery([ClientActionType.ClientAuthorized], getStarted);
 }

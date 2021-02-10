@@ -1,7 +1,7 @@
 import { Coordinate } from '@local/shared';
 import { GetActionsFromClass } from '../typings/GetActionsFromClass';
 import { createActionCreator } from '../utils/createActionCreator';
-import { ClientState } from './ClientState';
+import { ClientAuth, ClientDevice } from './ClientState';
 
 export enum ClientActionType {
   GetStartedClicked = 'client/get-started-click',
@@ -22,7 +22,7 @@ export class ClientActions {
     ClientActionType.GetStartedClicked
   );
 
-  static readonly devicesFetched = createAction<ClientState['devices']>()(
+  static readonly devicesFetched = createAction<ClientDevice[]>()(
     ClientActionType.DevicesFetched
   );
 
@@ -50,9 +50,16 @@ export class ClientActions {
     ClientActionType.ClientIdRequestFailed
   );
 
-  static readonly clientAuthorized = createAction<
-    Omit<NonNullable<ClientState['auth']>, 'timestamp'>
-  >()(ClientActionType.ClientAuthorized);
+  static readonly clientAuthorized = createAction<ClientAuth>()(
+    ClientActionType.ClientAuthorized
+  );
 }
 
 export type AllClientActions = GetActionsFromClass<typeof ClientActions>;
+
+export type ClientActionOf<T extends ClientActionType> = Extract<
+  AllClientActions,
+  {
+    type: T;
+  }
+>;
