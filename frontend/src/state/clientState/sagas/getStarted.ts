@@ -12,7 +12,7 @@ import {
 export function* getStarted({
   payload,
 }: ClientActionOf<ClientActionType.ClientAuthorized>) {
-  const [devices] = yield* call(() =>
+  const [devices, devicesError] = yield* call(() =>
     request<SpotifyDeviceResponse[]>(
       `/spotify/devices?token=${payload.accessToken}`
     )
@@ -20,17 +20,16 @@ export function* getStarted({
 
   yield* put(
     ClientActions.devicesFetched(
-      devices.map(({ name, id }) => ({
-        name,
-        id,
-      }))
+      devicesError
+        ? []
+        : devices.map(({ name, id }) => ({
+            name,
+            id,
+          }))
     )
   );
 
-  const [
-    location,
-    locationError,
-  ]: Attempt<GeolocationPosition> = yield* call(() => getUserLocation());
+  const [location, locationError] = yield* call(() => getUserLocation());
 
   if (locationError) {
     return yield* put(ClientActions.locationDenied());

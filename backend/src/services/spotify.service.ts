@@ -38,6 +38,22 @@ export class SpotifyService {
       .toPromise();
   }
 
+  public async queueSong(
+    token: string,
+    deviceId: string,
+    trackId: string,
+  ): Promise<any> {
+    return this.http
+      .post(`${this.config.spotifyApi}/me/player/queue`, null, {
+        headers: this.createAuthHeaders(token),
+        params: {
+          device_id: deviceId,
+          uri: trackId,
+        },
+      })
+      .toPromise();
+  }
+
   public async getRecommendations(
     token: string,
     seeds: RecommendationsRequest,

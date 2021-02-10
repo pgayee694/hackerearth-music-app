@@ -20,6 +20,10 @@ export function* authorize() {
     client_id: metadata.clientId,
     redirect_uri: `${window.location.origin}/redirect`,
     response_type: 'token',
-    scope: ['app-remote-control', 'user-read-playback-state'],
+    scope: [
+      'app-remote-control',
+      'user-read-playback-state',
+      'user-modify-playback-state',
+    ],
   });
 }

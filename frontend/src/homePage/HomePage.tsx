@@ -13,6 +13,7 @@ export function HomePage() {
   const isPlayerOpen = useSelector(PlayerSelectors.isOpen);
   const location = useSelector(ClientSelectors.getLocation);
   const auth = useSelector(ClientSelectors.getAuth);
+  const deviceId = useSelector(ClientSelectors.getSelectedDeviceId);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export function HomePage() {
               method: Method.Post,
               body: {
                 location,
+                deviceId,
                 hour: getCurrentHour(),
                 token: auth?.accessToken,
               },
