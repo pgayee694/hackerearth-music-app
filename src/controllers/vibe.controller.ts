@@ -1,6 +1,7 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { VibeRequest } from '@local/shared';
+import { QueueResponse, VibeRequest } from '@local/shared';
 import { VibeService } from '../services/vibe.service';
+import { RecommendationsResponse } from 'src/models/spotify';
 
 @Controller('vibe')
 export class VibeController {
@@ -8,8 +9,13 @@ export class VibeController {
     @Inject(VibeService) private readonly vibeService: VibeService,
   ) {}
 
-  @Post()
-  public async vibe(@Body() request: VibeRequest): Promise<any> {
-    return this.vibeService.queueTracks(request);
+  @Post('start')
+  public async start(@Body() request: VibeRequest): Promise<QueueResponse> {
+    return this.vibeService.queue(request, true);
+  }
+
+  @Post('queue')
+  public async queue(@Body() request: VibeRequest): Promise<QueueResponse> {
+    return this.vibeService.queue(request, false);
   }
 }

@@ -1,4 +1,4 @@
-import { VibeRequest } from '@local/shared';
+import { VibeRequest, QueueResponse } from '@local/shared';
 import { Inject, Injectable } from '@nestjs/common';
 import { ParameterCalculatorService } from './parameter-calculator.service';
 import { RecommendationsResponse } from 'src/models/spotify';
@@ -63,5 +63,41 @@ export class VibeService {
     );
 
     return tracks;
+  }
+
+  public async queue(
+    request: VibeRequest,
+    isStart: boolean = false,
+  ): Promise<QueueResponse> {
+    const weatherData = await this.weatherService.getCurrentWeather(
+      request.location,
+    );
+
+    const possibleGenres = weatherData.weather.flatMap(
+      (value) => this.weatherToGenreMap.get(value.main)!,
+    );
+
+    await this.spotifyService.setDevice(request.token, request.deviceId);
+
+    if (isStart) {
+      await this.spotifyService.resetQueue(request.token, request.deviceId);
+    }
+
+    const recs = await this.spotifyService.getRecommendations(request.token, {
+      seed_genres: possibleGenres,
+      target_valence: this.calculateValence(request.hour),
+      target_danceability: this.calculateDanceability(request.hour),
+      target_energy: this.calculateEnergy(weatherData),
+    });
+
+    const uris = recs.tracks.map((track) => track.uri);
+    await this.spotifyService.queueSongs(request.token, request.deviceId, uris);
+
+    return {
+      lengths: recs.tracks.map((track) => track.duration_ms),
+      totalLength: recs.tracks
+        .map((track) => track.duration_ms)
+        .reduce((sum, val) => (sum += val), 0),
+    };
   }
 }
