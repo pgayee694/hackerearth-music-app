@@ -28,15 +28,12 @@ export class SpotifyController {
   }
 
   @Post('queue')
-  public async queueSongs(
-    @Body() params: QueueSongsRequest,
-  ): Promise<RecommendationsResponse> {
-    const request: RecommendationsRequest = {
-      seed_genres: [Genres.Rock], // TODO: base this off the weather service
-      // TODO calculate other parameters
-    };
-
-    return this.spotifyService.getRecommendations(params.authCode, request);
+  public async queueSongs(@Body() params: QueueSongsRequest): Promise<void> {
+    this.spotifyService.queueSongs(
+      params.authCode,
+      params.deviceId,
+      params.songUris,
+    );
   }
 
   @Post('reset')

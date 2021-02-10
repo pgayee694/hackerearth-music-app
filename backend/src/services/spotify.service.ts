@@ -6,6 +6,7 @@ import { EnvironmentToken } from '../providers/environment.provider';
 import {
   RecommendationsRequest,
   RecommendationsResponse,
+  SimplifiedTrack,
 } from '../models/spotify';
 import { ConfigToken } from '../providers/config.provider';
 import { Config } from '../models/config';
@@ -159,6 +160,32 @@ export class SpotifyService {
       )
       .pipe(Rx.catchError(() => of([])))
       .toPromise();
+  }
+
+  public async queueSongs(
+    token: string,
+    deviceId: string,
+    songUris: string[],
+  ): Promise<void> {
+    songUris.forEach(async (uri) => {
+      const response = await this.http
+        .post(
+          `${this.config.spotifyApi}/me/player/queue`,
+          {},
+          {
+            headers: this.createAuthHeaders(token),
+            params: {
+              uri: uri,
+              device_id: deviceId,
+            },
+          },
+        )
+        .pipe(
+          Rx.map((response) => response.request),
+          Rx.catchError((err) => of({ error: err })),
+        )
+        .toPromise();
+    });
   }
 
   public async getMetadata(): Promise<SpotifyMetadataResponse> {

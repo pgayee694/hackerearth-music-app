@@ -146,8 +146,7 @@ export class QueueSongsRequest {
   constructor(
     public authCode: string,
     public deviceId: string,
-    public longitude: number,
-    public latitude: number,
+    public songUris: string[],
   ) {}
 }
 
