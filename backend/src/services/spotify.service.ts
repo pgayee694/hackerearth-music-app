@@ -18,7 +18,7 @@ export class SpotifyService {
     @Inject(EnvironmentToken) private readonly environment: NodeJS.ProcessEnv,
   ) {}
 
-  private createAuthHeaders(token: string): object {
+  private createAuthHeaders(token: string) {
     return {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -28,9 +28,12 @@ export class SpotifyService {
 
   public async getDevices(token: string): Promise<SpotifyDeviceResponse[]> {
     return this.http
-      .get(`${this.config.spotifyApi}/me/player/devices`, {
-        headers: this.createAuthHeaders(token),
-      })
+      .get<{ devices: SpotifyDeviceResponse[] }>(
+        `${this.config.spotifyApi}/me/player/devices`,
+        {
+          headers: this.createAuthHeaders(token),
+        },
+      )
       .pipe(
         Rx.map((response) => response.data.devices ?? []),
         Rx.catchError(() => of([])),
@@ -58,22 +61,23 @@ export class SpotifyService {
     token: string,
     seeds: RecommendationsRequest,
   ): Promise<RecommendationsResponse> {
-    return this.http
-      .get(`${this.config.spotifyApi}/recommendations`, {
-        headers: this.createAuthHeaders(token),
-        params: {
-          ...seeds,
-          seed_genres: seeds.seed_genres?.join(','),
+    const { data } = await this.http
+      .get<RecommendationsResponse>(
+        `${this.config.spotifyApi}/recommendations`,
+        {
+          headers: this.createAuthHeaders(token),
+          params: {
+            ...seeds,
+            seed_genres: seeds.seed_genres?.join(','),
+          },
         },
-      })
-      .pipe(
-        Rx.map((response) => response.data),
-        Rx.catchError((err) => of({ error: err })),
       )
       .toPromise();
+
+    return data;
   }
 
-  public async getMetadata(): Promise<SpotifyMetadataResponse> {
+  public getMetadata(): SpotifyMetadataResponse {
     return { clientId: this.environment.SPOTIFY_CLIENT_ID ?? null };
   }
 }

@@ -7,7 +7,7 @@
     "@chakra-ui/react": "^1.3.2",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
-    "@local/shared": "../shared",
+    "@local/shared": "../shared/",
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
