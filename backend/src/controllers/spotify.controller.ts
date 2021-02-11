@@ -16,7 +16,7 @@ export class SpotifyController {
 
   @Get('metadata')
   public async getMetadata(): Promise<SpotifyMetadataResponse> {
-    return this.spotifyService.getMetadata();
+    return Promise.resolve(this.spotifyService.getMetadata());
   }
 
   @Get('devices')

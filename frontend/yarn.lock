@@ -1998,7 +1998,10 @@
     chalk "^4.0.0"
 
 "@local/shared@../shared":
-  version "0.0.0"
+  version "0.0.1"
+
+"@local/shared@../shared/":
+  version "0.0.1"
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
