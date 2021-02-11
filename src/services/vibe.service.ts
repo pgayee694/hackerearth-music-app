@@ -1,7 +1,7 @@
 import { VibeRequest, QueueResponse } from '@local/shared';
 import { Inject, Injectable } from '@nestjs/common';
 import { ParameterCalculatorService } from './parameter-calculator.service';
-import { RecommendationsResponse } from 'src/models/spotify';
+import { Genres, RecommendationsResponse } from 'src/models/spotify';
 import { WeatherResponse } from 'src/models/weather-response';
 import { WeatherToGenreMap } from '../models/weather-to-genre-map';
 import { WeatherToGenreMapToken } from '../providers/weather-to-genre-map.provider';
@@ -67,14 +67,10 @@ export class VibeService {
 
   public async queue(
     request: VibeRequest,
-    isStart: boolean = false,
+    isStart = false,
   ): Promise<QueueResponse> {
     const weatherData = await this.weatherService.getCurrentWeather(
       request.location,
-    );
-
-    const possibleGenres = weatherData.weather.flatMap(
-      (value) => this.weatherToGenreMap.get(value.main)!,
     );
 
     await this.spotifyService.setDevice(request.token, request.deviceId);
@@ -84,7 +80,7 @@ export class VibeService {
     }
 
     const recs = await this.spotifyService.getRecommendations(request.token, {
-      seed_genres: possibleGenres,
+      seed_genres: [Genres.Rock],
       target_valence: this.calculateValence(request.hour),
       target_danceability: this.calculateDanceability(request.hour),
       target_energy: this.calculateEnergy(weatherData),

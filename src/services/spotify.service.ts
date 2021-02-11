@@ -167,8 +167,9 @@ export class SpotifyService {
     deviceId: string,
     songUris: string[],
   ): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     songUris.forEach(async (uri) => {
-      const response = await this.http
+      await this.http
         .post(
           `${this.config.spotifyApi}/me/player/queue`,
           {},
@@ -180,12 +181,10 @@ export class SpotifyService {
             },
           },
         )
-        .pipe(
-          Rx.map((response) => response.request),
-          Rx.catchError((err) => of({ error: err })),
-        )
         .toPromise();
     });
+
+    return await new Promise(() => null);
   }
 
   public async getMetadata(): Promise<SpotifyMetadataResponse> {
