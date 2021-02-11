@@ -13,14 +13,21 @@ export class ClientSelectors {
 
   static readonly isLoggedIn = createSelector(
     ClientSelectors.getAuth,
-    (auth) => auth && Date.now() < auth.timestamp + auth.expiresIn * 1000
+    (auth) => auth && Date.now() < auth.timestamp + auth.expiresIn * 1000,
   );
 
   static readonly hasSelectedDevice = createSelector(
     ClientSelectors.getDevices,
     ClientSelectors.getSelectedDeviceId,
     (devices, selectedDeviceId) =>
-      selectedDeviceId &&
-      devices.some((device) => device.id === selectedDeviceId)
+      Boolean(
+        selectedDeviceId &&
+          devices.some((device) => device.id === selectedDeviceId),
+      ),
+  );
+
+  static readonly hasLocation = createSelector(
+    ClientSelectors.getLocation,
+    (location) => Boolean(location),
   );
 }

@@ -14,16 +14,20 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClientActions } from '../state/clientState/ClientActions';
 import { ClientSelectors } from '../state/clientState/ClientSelectors';
+import { noop } from '../utils/noop';
 
 import styles from './DeviceSelect.module.css';
 
-export function DeviceSelect() {
+export interface DeviceSelectProps {
+  isOpen: boolean;
+}
+
+export function DeviceSelect({ isOpen }: DeviceSelectProps) {
   const devices = useSelector(ClientSelectors.getDevices);
-  const hasSelectedDevice = useSelector(ClientSelectors.hasSelectedDevice);
   const dispatch = useDispatch();
 
   return (
-    <Modal isOpen={!hasSelectedDevice} isCentered size="lg" onClose={() => {}}>
+    <Modal isOpen={isOpen} isCentered size="lg" onClose={noop}>
       <ModalOverlay className={styles.overlay} />
       <ModalContent m="2">
         <ModalHeader textAlign="center">Select a device</ModalHeader>
