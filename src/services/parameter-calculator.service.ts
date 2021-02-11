@@ -24,16 +24,24 @@ export class ParameterCalculatorService {
     private readonly timeOfDayToGenreMap: TimeOfDayToGenreMap,
   ) {}
 
-  private calculateValence(hour: number): number {
-    return (
-      Math.log2(hour / 24 + 1) * Math.sin((2 * Math.PI * hour) / 48) * 1 + 0.2
-    );
+  private calculateValence(hour: number): [min: number, max: number] {
+    return [
+      Math.log2(hour / 24 + 1) * Math.sin((Math.PI * hour) / 24) * 0.6,
+      Math.log2(hour / 24 + 1) * Math.sin((Math.PI * hour) / 24) * 0.9 + 0.42,
+    ];
   }
 
-  private calculateTempo(hour: number) {
-    return Math.round(
-      hour + 180 * (Math.sin((2 * Math.PI * hour) / 48) * 0.3 + 0.55),
-    );
+  private calculateTempo(hour: number): [min: number, max: number] {
+    return [
+      Math.round(
+        40 +
+          hour +
+          220 *
+            (Math.log2(hour / 24 + 1) * Math.sin((Math.PI * hour) / 24) * 0.3 +
+              0.2),
+      ),
+      Math.round(hour + 180 * (Math.sin((Math.PI * hour) / 24) * 0.5 + 0.55)),
+    ];
   }
 
   private calculateDanceability(hour: number): number {
@@ -101,19 +109,19 @@ export class ParameterCalculatorService {
       ...this.timeOfDayToGenreMap.get(this.calculateTimeOfDay(hour))!,
     ];
 
-    const seedGenres = shuffleArray(possibleGenres).slice(0, 3);
-    const maxTempo = this.calculateTempo(hour);
-    const targetValence = this.calculateValence(hour);
+    const seed_genres = shuffleArray(possibleGenres).slice(0, 3);
+    const [min_tempo, max_tempo] = this.calculateTempo(hour);
+    const [min_valence, max_valence] = this.calculateValence(hour);
 
     return {
-      limit: 5,
-      seed_genres: seedGenres,
+      max_valence,
+      min_valence,
+      min_tempo,
+      max_tempo,
+      seed_genres,
+      limit: 10,
       min_energy: this.calculateEnergy(weatherData),
       min_danceability: this.calculateDanceability(hour),
-      max_tempo: maxTempo,
-      min_tempo: maxTempo - 40,
-      max_valence: targetValence + 0.1,
-      min_valence: targetValence - 0.04,
     };
   }
 }
