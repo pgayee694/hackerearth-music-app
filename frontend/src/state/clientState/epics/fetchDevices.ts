@@ -18,13 +18,13 @@ export const fetchDevices: Epic<AllClientActions> = (action$) =>
       ),
     ),
     map(([devices, error]) =>
-      error
-        ? ClientActions.devicesFetched([])
-        : ClientActions.devicesFetched(
-            devices.map(({ name, id }) => ({
+      ClientActions.devicesFetched(
+        error
+          ? []
+          : devices.map(({ name, id }) => ({
               name,
               id,
             })),
-          ),
+      ),
     ),
   );
