@@ -8,6 +8,7 @@ import { Season } from '../models/season';
 import { SeasonToGenreMapToken } from '../providers/season-to-genre-map.provider';
 import { SeasonToGenreMap } from '../models/season-to-genre-map';
 import { TimeOfDay } from '../models/time-of-day';
+import { hourToDay } from 'src/utils/hourToDay';
 import { TimeOfDayToGenreMapToken } from 'src/providers/time-of-day-to-genre-map.provider';
 import { TimeOfDayToGenreMap } from 'src/models/time-of-day-to-genre-map';
 
@@ -25,27 +26,29 @@ export class ParameterCalculatorService {
   ) {}
 
   private calculateValence(hour: number): [min: number, max: number] {
+    const day = hourToDay(hour);
+
     return [
-      Math.log2(hour / 24 + 1) * Math.sin((Math.PI * hour) / 24) * 0.6,
-      Math.log2(hour / 24 + 1) * Math.sin((Math.PI * hour) / 24) * 0.9 + 0.42,
+      Math.log2(day + 1) * Math.sin(Math.PI * day) * 0.6,
+      Math.log2(day + 1) * Math.sin(Math.PI * day) * 0.9 + 0.42,
     ];
   }
 
   private calculateTempo(hour: number): [min: number, max: number] {
+    const day = hourToDay(hour);
+
     return [
       Math.round(
         40 +
           hour +
-          220 *
-            (Math.log2(hour / 24 + 1) * Math.sin((Math.PI * hour) / 24) * 0.3 +
-              0.2),
+          220 * (Math.log2(day + 1) * Math.sin(Math.PI * day) * 0.3 + 0.2),
       ),
-      Math.round(hour + 180 * (Math.sin((Math.PI * hour) / 24) * 0.5 + 0.55)),
+      Math.round(hour + 180 * (Math.sin(Math.PI * day) * 0.5 + 0.55)),
     ];
   }
 
   private calculateDanceability(hour: number): number {
-    return hour / 24;
+    return hourToDay(hour);
   }
 
   private calculateEnergy(weather: WeatherResponse): number {
