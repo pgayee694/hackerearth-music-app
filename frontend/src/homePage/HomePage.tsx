@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DeviceSelect } from '../deviceSelect/DeviceSelect';
 import { LocationPrompt } from '../locationPrompt/LocationPrompt';
 import { Player } from '../player/Player';
+import { ClientActions } from '../state/clientState/ClientActions';
 import { ClientSelectors } from '../state/clientState/ClientSelectors';
 import { PlayerActions } from '../state/playerState/PlayerActions';
 import { PlayerSelectors } from '../state/playerState/PlayerSelectors';
@@ -18,6 +19,9 @@ export function HomePage() {
   const hasLocation = useSelector(ClientSelectors.hasLocation);
   const deviceId = useSelector(ClientSelectors.getSelectedDeviceId);
   const hasStartedPlayback = useSelector(ClientSelectors.hasStartedPlayback);
+  const songLengths = useSelector(ClientSelectors.songLengths);
+  const currSongLength = useSelector(ClientSelectors.currSongLength);
+  const isQueuingSongs = useSelector(ClientSelectors.isQueuingSongs);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,9 +31,15 @@ export function HomePage() {
   });
 
   useEffect(() => {
-    if (!hasStartedPlayback && location && deviceId && auth) {
+    if (
+      !isQueuingSongs &&
+      !hasStartedPlayback &&
+      location &&
+      deviceId &&
+      auth
+    ) {
       dispatch(
-        PlayerActions.startPlayback({
+        ClientActions.startPlayback({
           location,
           deviceId,
           hour: getCurrentHour(),
@@ -38,6 +48,41 @@ export function HomePage() {
       );
     }
   });
+
+  useEffect(() => {
+    if (
+      songLengths.length <= 3 &&
+      hasStartedPlayback &&
+      !isQueuingSongs &&
+      location &&
+      deviceId &&
+      auth
+    ) {
+      dispatch(
+        ClientActions.queueSongs({
+          location,
+          deviceId,
+          hour: getCurrentHour(),
+          token: auth?.accessToken,
+        }),
+      );
+    }
+  });
+
+  useEffect(() => {
+    if (hasStartedPlayback) {
+      setTimeout(() => {
+        console.log('in the set timeout');
+        dispatch(ClientActions.songFinished());
+      }, currSongLength);
+    }
+  });
+
+  useEffect(() => {
+    if (hasStartedPlayback) {
+      dispatch(PlayerActions.playbackStarted());
+    }
+  }, [hasStartedPlayback]);
 
   return (
     <Player>

@@ -20,6 +20,9 @@ export interface ClientState {
   selectedDeviceId: string | null;
   location: Coordinate | null;
   hasStartedPlayback: boolean;
+  songLengths: number[];
+  totalLength: number;
+  isQueuingSongs: boolean;
 }
 
 export const defaultClientState: ClientState = {
@@ -28,4 +31,7 @@ export const defaultClientState: ClientState = {
   devices: [],
   location: null,
   hasStartedPlayback: false,
+  songLengths: [],
+  totalLength: 0,
+  isQueuingSongs: false,
 };

@@ -73,15 +73,13 @@ export class VibeService {
       request.location,
     );
 
-    console.log(request);
-    await this.spotifyService.setDevice(request.token, request.deviceId);
-
     if (isStart) {
-      await this.spotifyService.resetQueue(request.token, request.deviceId);
+      await this.spotifyService.setDevice(request.token, request.deviceId);
+      await this.spotifyService.pause(request.token, request.deviceId);
     }
 
     const recs = await this.spotifyService.getRecommendations(request.token, {
-      seed_genres: [Genres.Rock],
+      seed_genres: [Genres.Rap],
       target_valence: this.calculateValence(request.hour),
       target_danceability: this.calculateDanceability(request.hour),
       target_energy: this.calculateEnergy(weatherData),
@@ -91,8 +89,14 @@ export class VibeService {
     await this.spotifyService.queueSongs(request.token, request.deviceId, uris);
 
     if (isStart) {
-      await this.spotifyService.skip(request.token, request.deviceId);
-      await this.spotifyService.resume(request.token, request.deviceId);
+      setTimeout(async () => {
+        await this.spotifyService.skipTo(
+          request.token,
+          request.deviceId,
+          uris[0],
+        );
+        await this.spotifyService.resume(request.token, request.deviceId);
+      }, 3000); // bc spotify sends response of having queued before it actually does
     }
 
     return {

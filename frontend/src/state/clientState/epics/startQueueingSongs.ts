@@ -1,19 +1,18 @@
 import { Epic } from 'redux-observable';
-import {
-  AllPlayerActions,
-  PlayerActions,
-  PlayerActionType,
-} from '../PlayerActions';
-import * as Rx from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { Method, request } from '../../../utils/request';
 import { QueueResponse } from '@local/shared';
 import { ofType } from '../../utils/ofType';
+import {
+  AllClientActions,
+  ClientActions,
+  ClientActionType,
+} from '../ClientActions';
 
-export const startQueuingSongs: Epic<AllPlayerActions> = (action$) =>
+export const startQueuingSongs: Epic<AllClientActions> = (action$) =>
   action$.pipe(
-    ofType(PlayerActionType.StartPlayback),
-    Rx.tap((action) => console.log('in the effect ', action)),
-    Rx.switchMap((action) =>
+    ofType(ClientActionType.StartPlayback),
+    switchMap((action) =>
       request<QueueResponse>('/vibe/start', {
         method: Method.Post,
         body: {
@@ -24,9 +23,9 @@ export const startQueuingSongs: Epic<AllPlayerActions> = (action$) =>
         },
       }),
     ),
-    Rx.map(([result, error]) =>
+    map(([result, error]) =>
       error || !!!result
-        ? PlayerActions.queueingRequestFailed()
-        : PlayerActions.queuingRequestSucceeded(result),
+        ? ClientActions.queueRequestFailed()
+        : ClientActions.queueRequestSucceeded(result),
     ),
   );

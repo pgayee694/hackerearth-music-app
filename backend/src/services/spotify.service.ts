@@ -103,14 +103,57 @@ export class SpotifyService {
         )
         .pipe(
           Rx.concatMap(() =>
-            this.http.get<{ is_playing: boolean }>(
+            this.http.get(`${this.config.spotifyApi}/me/player`, {
+              headers: this.createAuthHeaders(token),
+            }),
+          ),
+          Rx.map((response) => response.data.is_playing),
+          Rx.catchError(() => of([] as any)),
+        )
+        .toPromise();
+    }
+
+    //spotify is kinda jank, gotta pause here even though it should already be
+    await this.pause(token, deviceId);
+  }
+
+  public async skipTo(
+    token: string,
+    deviceId: string,
+    target: string,
+  ): Promise<void> {
+    let curr: string = await this.http
+      .get(`${this.config.spotifyApi}/me/player`, {
+        headers: this.createAuthHeaders(token),
+      })
+      .pipe(
+        Rx.map((response) => response.data.item.uri),
+        Rx.catchError(() => of([] as any)),
+      )
+      .toPromise();
+
+    while (curr != target) {
+      curr = await this.http
+        .post(
+          `${this.config.spotifyApi}/me/player/next`,
+          {},
+          {
+            headers: this.createAuthHeaders(token),
+            params: {
+              device_id: deviceId,
+            },
+          },
+        )
+        .pipe(
+          Rx.concatMap(() =>
+            this.http.get<{ item: { uri: string } }>(
               `${this.config.spotifyApi}/me/player`,
               {
                 headers: this.createAuthHeaders(token),
               },
             ),
           ),
-          Rx.map((response) => response.data.is_playing),
+          Rx.map((response) => response.data.item.uri),
           Rx.catchError(() => of([] as any)),
         )
         .toPromise();
@@ -144,6 +187,21 @@ export class SpotifyService {
         },
       )
       .pipe(Rx.catchError(() => of([])))
+      .toPromise();
+  }
+
+  public async pause(token: string, deviceId: string): Promise<void> {
+    await this.http
+      .put(
+        `${this.config.spotifyApi}/me/player/pause`,
+        {},
+        {
+          headers: this.createAuthHeaders(token),
+          params: {
+            device_id: deviceId,
+          },
+        },
+      )
       .toPromise();
   }
 

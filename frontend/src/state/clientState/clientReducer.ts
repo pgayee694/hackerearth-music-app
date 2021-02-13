@@ -3,7 +3,7 @@ import { ClientState, defaultClientState } from './ClientState';
 
 export function clientReducer(
   state: ClientState = defaultClientState,
-  action: AllClientActions
+  action: AllClientActions,
 ): ClientState {
   switch (action.type) {
     case ClientActionType.GetStartedClicked:
@@ -48,6 +48,31 @@ export function clientReducer(
           expiresIn,
           timestamp,
         },
+      };
+    case ClientActionType.StartPlayback:
+      return {
+        ...state,
+        isQueuingSongs: true,
+      };
+    case ClientActionType.QueueMoreSongs:
+      return {
+        ...state,
+        isQueuingSongs: true,
+      };
+    case ClientActionType.QueueRequestSucceeded:
+      return {
+        ...state,
+        songLengths: action.payload.lengths,
+        totalLength: action.payload.totalLength,
+        hasStartedPlayback: true,
+        isQueuingSongs: false,
+      };
+    case ClientActionType.SongFinished:
+      const length = [...state.songLengths].shift() ?? 0;
+      return {
+        ...state,
+        songLengths: state.songLengths.slice(1),
+        totalLength: state.totalLength - length,
       };
     default:
       return state;

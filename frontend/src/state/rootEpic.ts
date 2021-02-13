@@ -3,7 +3,8 @@ import { fetchClientMetadata } from './clientState/epics/fetchClientMetadata';
 import { fetchDevices } from './clientState/epics/fetchDevices';
 import { redirectToAuth } from './clientState/epics/redirectToAuth';
 import { requestLocation } from './clientState/epics/requestLocation';
-import { startQueuingSongs } from './playerState/epics/startPlayback';
+import { queueMoreSongs } from './clientState/epics/queueMoreSongs';
+import { startQueuingSongs } from './clientState/epics/startQueueingSongs';
 
 export const rootEpic: Epic = combineEpics(
   fetchClientMetadata,
@@ -11,4 +12,5 @@ export const rootEpic: Epic = combineEpics(
   redirectToAuth,
   requestLocation,
   startQueuingSongs,
+  queueMoreSongs,
 );
