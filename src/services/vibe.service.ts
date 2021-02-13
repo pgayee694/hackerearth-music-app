@@ -56,6 +56,7 @@ export class VibeService {
       totalLength: recs.tracks
         .map((track) => track.duration_ms)
         .reduce((sum, val) => (sum += val), 0),
+      uris: uris,
     };
   }
 }
