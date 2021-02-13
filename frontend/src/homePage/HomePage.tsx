@@ -32,58 +32,30 @@ export function HomePage() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (
-      !isQueuingSongs &&
-      !hasStartedPlayback &&
-      location &&
-      deviceId &&
-      auth
-    ) {
-      dispatch(
-        ClientActions.startPlayback({
-          location,
-          deviceId,
-          hour: getCurrentHour(),
-          token: auth.accessToken,
-        }),
-      );
+    if (!isQueuingSongs && !hasStartedPlayback && hasSelectedDevice) {
+      dispatch(ClientActions.startPlayback());
     }
-  });
+  }, [isQueuingSongs, hasStartedPlayback, hasSelectedDevice, dispatch]);
 
   useEffect(() => {
-    if (
-      songLengths.length <= 3 &&
-      hasStartedPlayback &&
-      !isQueuingSongs &&
-      location &&
-      deviceId &&
-      auth
-    ) {
-      dispatch(
-        ClientActions.queueSongs({
-          location,
-          deviceId,
-          hour: getCurrentHour(),
-          token: auth?.accessToken,
-        }),
-      );
+    if (songLengths.length <= 3 && hasStartedPlayback && !isQueuingSongs) {
+      dispatch(ClientActions.queueSongs());
     }
-  });
+  }, [songLengths, hasStartedPlayback, isQueuingSongs, dispatch]);
 
   useEffect(() => {
     if (hasStartedPlayback) {
       setTimeout(() => {
-        console.log('in the set timeout');
         dispatch(ClientActions.songFinished());
       }, currSongLength);
     }
-  });
+  }, [hasStartedPlayback, currSongLength, dispatch]);
 
   useEffect(() => {
     if (hasStartedPlayback) {
       dispatch(PlayerActions.playbackStarted());
     }
-  }, [dispatch, hasStartedPlayback]);
+  }, [hasStartedPlayback, dispatch]);
 
   return (
     <Player>

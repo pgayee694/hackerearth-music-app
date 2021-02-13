@@ -1,5 +1,5 @@
 import { Epic } from 'redux-observable';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, catchError } from 'rxjs/operators';
 import { Method, request } from '../../../utils/request';
 import { QueueResponse } from '@local/shared';
 import { ofType } from '../../utils/ofType';
@@ -8,19 +8,25 @@ import {
   ClientActions,
   ClientActionType,
 } from '../ClientActions';
+import { AppState } from '../../AppState';
+import { getCurrentHour } from '../../../utils/getCurrentHour';
 import { of } from 'rxjs';
 
-export const queueMoreSongs: Epic<AllClientActions> = (action$) =>
+export const queueMoreSongs: Epic<AllClientActions, any, AppState> = (
+  action$,
+  state$,
+) =>
   action$.pipe(
     ofType(ClientActionType.QueueMoreSongs),
-    switchMap((action) =>
+    withLatestFrom(state$),
+    switchMap(([action, state]) =>
       request<QueueResponse>('/vibe/queue', {
         method: Method.Post,
         body: {
-          location: action.payload.location,
-          deviceId: action.payload.deviceId,
-          hour: action.payload.hour,
-          token: action.payload.token,
+          location: state.client.location,
+          deviceId: state.client.selectedDeviceId,
+          hour: getCurrentHour(),
+          token: state.client.auth?.accessToken,
         },
       }),
     ),
