@@ -122,7 +122,7 @@ export class ParameterCalculatorService {
       min_tempo,
       max_tempo,
       seed_genres,
-      limit: 10,
+      limit: 5,
       min_energy: this.calculateEnergy(weatherData),
       min_danceability: this.calculateDanceability(hour),
     };
