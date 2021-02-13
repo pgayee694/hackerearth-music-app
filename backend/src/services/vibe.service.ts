@@ -73,6 +73,7 @@ export class VibeService {
       request.location,
     );
 
+    console.log(request);
     await this.spotifyService.setDevice(request.token, request.deviceId);
 
     if (isStart) {
@@ -88,6 +89,11 @@ export class VibeService {
 
     const uris = recs.tracks.map((track) => track.uri);
     await this.spotifyService.queueSongs(request.token, request.deviceId, uris);
+
+    if (isStart) {
+      await this.spotifyService.skip(request.token, request.deviceId);
+      await this.spotifyService.resume(request.token, request.deviceId);
+    }
 
     return {
       lengths: recs.tracks.map((track) => track.duration_ms),

@@ -1,3 +1,4 @@
+import { QueueResponse, VibeRequest } from '@local/shared';
 import { GetActionsFromClass } from '../typings/GetActionsFromClass';
 import { createActionCreator } from '../utils/createActionCreator';
 
@@ -9,6 +10,9 @@ export enum PlayerActionType {
   LikeSongClicked = 'player/like-song-clicked',
   NextSongClicked = 'player/next-song-clicked',
   PreviousSongClicked = 'player/previous-song-clicked',
+  StartPlayback = 'player/start-playback',
+  QueueRequestSucceeded = 'player/queue-request-succeeded',
+  QueueRequestFailed = 'player/queue-request-failed',
 }
 
 const createAction = createActionCreator<PlayerActionType>();
@@ -19,13 +23,22 @@ export class PlayerActions {
   static readonly playClicked = createAction()(PlayerActionType.PlayClicked);
   static readonly pauseClicked = createAction()(PlayerActionType.PauseClicked);
   static readonly likeSongClicked = createAction()(
-    PlayerActionType.LikeSongClicked
+    PlayerActionType.LikeSongClicked,
   );
   static readonly nextSongClicked = createAction()(
-    PlayerActionType.NextSongClicked
+    PlayerActionType.NextSongClicked,
   );
   static readonly previousSongClicked = createAction()(
-    PlayerActionType.PreviousSongClicked
+    PlayerActionType.PreviousSongClicked,
+  );
+  static readonly startPlayback = createAction<VibeRequest>()(
+    PlayerActionType.StartPlayback,
+  );
+  static readonly queuingRequestSucceeded = createAction<QueueResponse>()(
+    PlayerActionType.QueueRequestSucceeded,
+  );
+  static readonly queueingRequestFailed = createAction()(
+    PlayerActionType.QueueRequestFailed,
   );
 }
 

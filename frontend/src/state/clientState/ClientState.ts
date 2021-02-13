@@ -19,6 +19,7 @@ export interface ClientState {
   devices: ClientDevice[];
   selectedDeviceId: string | null;
   location: Coordinate | null;
+  hasStartedPlayback: boolean;
 }
 
 export const defaultClientState: ClientState = {
@@ -26,4 +27,5 @@ export const defaultClientState: ClientState = {
   selectedDeviceId: null,
   devices: [],
   location: null,
+  hasStartedPlayback: false,
 };

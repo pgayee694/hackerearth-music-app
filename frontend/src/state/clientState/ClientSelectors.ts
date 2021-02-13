@@ -10,6 +10,7 @@ export class ClientSelectors {
   static readonly getDevices = createPropSelector('devices');
   static readonly getSelectedDeviceId = createPropSelector('selectedDeviceId');
   static readonly getLocation = createPropSelector('location');
+  static readonly hasStartedPlayback = createPropSelector('hasStartedPlayback');
 
   static readonly isLoggedIn = createSelector(
     ClientSelectors.getAuth,
