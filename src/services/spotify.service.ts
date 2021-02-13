@@ -71,6 +71,7 @@ export class SpotifyService {
           params: {
             ...seeds,
             seed_genres: seeds.seed_genres?.join(','),
+            limit: 5,
           },
         },
       )
@@ -121,7 +122,7 @@ export class SpotifyService {
       .put(
         `${this.config.spotifyApi}/me/player`,
         {
-          device_ids: deviceId,
+          device_ids: [deviceId],
         },
         {
           headers: this.createAuthHeaders(token),
@@ -181,15 +182,12 @@ export class SpotifyService {
             },
           },
         )
+        .pipe(Rx.map(async (response) => console.log(response.status)))
         .toPromise();
     });
-
-    return await new Promise(() => null);
   }
 
-  public async getMetadata(): Promise<SpotifyMetadataResponse> {
-    return await new Promise(() => {
-      this.environment.SPOTIFY_CLIENT_ID ?? null;
-    });
+  public getMetadata(): SpotifyMetadataResponse {
+    return { clientId: this.environment.SPOTIFY_CLIENT_ID ?? null };
   }
 }
