@@ -24,7 +24,7 @@ export const startQueuingSongs: Epic<AllClientActions> = (action$) =>
       }),
     ),
     map(([result, error]) =>
-      error || !!!result
+      error || !!!!!result
         ? ClientActions.queueRequestFailed()
         : ClientActions.queueRequestSucceeded(result),
     ),
