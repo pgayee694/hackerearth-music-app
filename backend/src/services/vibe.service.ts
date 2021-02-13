@@ -1,6 +1,10 @@
-import { VibeRequest } from '@local/shared';
+import { VibeRequest, QueueResponse } from '@local/shared';
 import { Inject, Injectable } from '@nestjs/common';
 import { ParameterCalculatorService } from './parameter-calculator.service';
+import { Genres, RecommendationsResponse } from 'src/models/spotify';
+import { WeatherResponse } from 'src/models/weather-response';
+import { WeatherToGenreMap } from '../models/weather-to-genre-map';
+import { WeatherToGenreMapToken } from '../providers/weather-to-genre-map.provider';
 import { SpotifyService } from './spotify.service';
 import { WeatherService } from './weather.service';
 
@@ -13,7 +17,10 @@ export class VibeService {
     private readonly parameterCalculator: ParameterCalculatorService,
   ) {}
 
-  public async queueTracks(request: VibeRequest): Promise<any> {
+  public async queue(
+    request: VibeRequest,
+    isStart = false,
+  ): Promise<QueueResponse> {
     const weatherData = await this.weatherService.getCurrentWeather(
       request.location,
     );
@@ -23,21 +30,32 @@ export class VibeService {
       weatherData,
     );
 
-    const { tracks } = await this.spotifyService.getRecommendations(
+    if (isStart) {
+      await this.spotifyService.setDevice(request.token, request.deviceId);
+      await this.spotifyService.pause(request.token, request.deviceId);
+    }
+
+    const recs = await this.spotifyService.getRecommendations(
       request.token,
       recommendationParameters,
     );
 
-    await Promise.all(
-      tracks.map((track) =>
-        this.spotifyService.queueSong(
-          request.token,
-          request.deviceId,
-          track.uri,
-        ),
-      ),
-    );
+    const uris = recs.tracks.map((track) => track.uri);
+    console.log(uris);
+    await this.spotifyService.queueSongs(request.token, request.deviceId, uris);
 
-    return tracks;
+    if (isStart) {
+      setTimeout(async () => {
+        await this.spotifyService.skipTo(request.token, request.deviceId, uris);
+        await this.spotifyService.resume(request.token, request.deviceId);
+      }, 1000); //spotify pls queue faster
+    }
+
+    return {
+      lengths: recs.tracks.map((track) => track.duration_ms),
+      totalLength: recs.tracks
+        .map((track) => track.duration_ms)
+        .reduce((sum, val) => (sum += val), 0),
+    };
   }
 }

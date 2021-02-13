@@ -145,9 +145,13 @@ export enum RestrictionReason {
 export class QueueSongsRequest {
   constructor(
     public authCode: string,
-    public longitude: number,
-    public latitude: number,
+    public deviceId: string,
+    public songUris: string[],
   ) {}
+}
+
+export class SpotifyRequest {
+  constructor(public authCode: string, public deviceId: string) {}
 }
 
 export interface RecommendationsRequest {

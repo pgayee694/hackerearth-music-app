@@ -6,9 +6,11 @@ import { EnvironmentToken } from '../providers/environment.provider';
 import {
   RecommendationsRequest,
   RecommendationsResponse,
+  SimplifiedTrack,
 } from '../models/spotify';
 import { ConfigToken } from '../providers/config.provider';
 import { Config } from '../models/config';
+import { response } from 'express';
 
 @Injectable()
 export class SpotifyService {
@@ -69,12 +71,178 @@ export class SpotifyService {
           params: {
             ...seeds,
             seed_genres: seeds.seed_genres?.join(','),
+            limit: 5,
           },
         },
       )
       .toPromise();
 
     return data;
+  }
+
+  public async resetQueue(token: string, deviceId: string): Promise<void> {
+    let isPlaying: boolean = await this.http
+      .get<{ is_playing: boolean }>(`${this.config.spotifyApi}/me/player`, {
+        headers: this.createAuthHeaders(token),
+      })
+      .pipe(Rx.map((response) => response.data.is_playing))
+      .toPromise<boolean>();
+
+    while (isPlaying) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      isPlaying = await this.http
+        .post<boolean>(
+          `${this.config.spotifyApi}/me/player/next`,
+          {},
+          {
+            headers: this.createAuthHeaders(token),
+            params: {
+              device_id: deviceId,
+            },
+          },
+        )
+        .pipe(
+          Rx.concatMap(() =>
+            this.http.get(`${this.config.spotifyApi}/me/player`, {
+              headers: this.createAuthHeaders(token),
+            }),
+          ),
+          Rx.map((response) => response.data.is_playing),
+          Rx.catchError(() => of([] as any)),
+        )
+        .toPromise();
+    }
+
+    //spotify is kinda jank, gotta pause here even though it should already be
+    await this.pause(token, deviceId);
+  }
+
+  public async skipTo(
+    token: string,
+    deviceId: string,
+    targets: string[],
+  ): Promise<void> {
+    let curr: string = await this.http
+      .get(`${this.config.spotifyApi}/me/player`, {
+        headers: this.createAuthHeaders(token),
+      })
+      .pipe(
+        Rx.map((response) => response.data.item.uri),
+        Rx.catchError(() => of([] as any)),
+      )
+      .toPromise();
+
+    while (!targets.includes(curr)) {
+      curr = await this.http
+        .post(
+          `${this.config.spotifyApi}/me/player/next`,
+          {},
+          {
+            headers: this.createAuthHeaders(token),
+            params: {
+              device_id: deviceId,
+            },
+          },
+        )
+        .pipe(
+          Rx.concatMap(() =>
+            this.http.get<{ item: { uri: string } }>(
+              `${this.config.spotifyApi}/me/player`,
+              {
+                headers: this.createAuthHeaders(token),
+              },
+            ),
+          ),
+          Rx.map((response) => response.data.item.uri),
+          Rx.catchError(() => of([] as any)),
+        )
+        .toPromise();
+    }
+  }
+
+  public async setDevice(token: string, deviceId: string): Promise<void> {
+    await this.http
+      .put(
+        `${this.config.spotifyApi}/me/player`,
+        {
+          device_ids: [deviceId],
+        },
+        {
+          headers: this.createAuthHeaders(token),
+        },
+      )
+      .toPromise();
+  }
+
+  public async skip(token: string, deviceId: string): Promise<void> {
+    await this.http
+      .post(
+        `${this.config.spotifyApi}/me/player/next`,
+        {},
+        {
+          headers: this.createAuthHeaders(token),
+          params: {
+            device_id: deviceId,
+          },
+        },
+      )
+      .pipe(Rx.catchError(() => of([])))
+      .toPromise();
+  }
+
+  public async pause(token: string, deviceId: string): Promise<void> {
+    await this.http
+      .put(
+        `${this.config.spotifyApi}/me/player/pause`,
+        {},
+        {
+          headers: this.createAuthHeaders(token),
+          params: {
+            device_id: deviceId,
+          },
+        },
+      )
+      .toPromise();
+  }
+
+  public async resume(token: string, deviceId: string): Promise<void> {
+    await this.http
+      .put(
+        `${this.config.spotifyApi}/me/player/play`,
+        {},
+        {
+          headers: this.createAuthHeaders(token),
+          params: {
+            device_id: deviceId,
+          },
+        },
+      )
+      .pipe(Rx.catchError(() => of([])))
+      .toPromise();
+  }
+
+  public async queueSongs(
+    token: string,
+    deviceId: string,
+    songUris: string[],
+  ): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    songUris.forEach(async (uri) => {
+      await this.http
+        .post(
+          `${this.config.spotifyApi}/me/player/queue`,
+          {},
+          {
+            headers: this.createAuthHeaders(token),
+            params: {
+              uri: uri,
+              device_id: deviceId,
+            },
+          },
+        )
+        .pipe(Rx.map(async (response) => console.log(response.status)))
+        .toPromise();
+    });
   }
 
   public getMetadata(): SpotifyMetadataResponse {

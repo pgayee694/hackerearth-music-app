@@ -3,7 +3,7 @@ import { PlayerState, defaultPlayerState } from './PlayerState';
 
 export function playerReducer(
   state: PlayerState = defaultPlayerState,
-  action: AllPlayerActions
+  action: AllPlayerActions,
 ): PlayerState {
   switch (action.type) {
     case PlayerActionType.OpenPlayer:
@@ -14,6 +14,8 @@ export function playerReducer(
       return { ...state, isPlaying: true };
     case PlayerActionType.PauseClicked:
       return { ...state, isPlaying: false };
+    case PlayerActionType.PlaybackStarted:
+      return { ...state, isPlaying: true };
     default:
       return state;
   }

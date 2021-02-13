@@ -9,6 +9,7 @@ export enum PlayerActionType {
   LikeSongClicked = 'player/like-song-clicked',
   NextSongClicked = 'player/next-song-clicked',
   PreviousSongClicked = 'player/previous-song-clicked',
+  PlaybackStarted = 'player/playback-started',
 }
 
 const createAction = createActionCreator<PlayerActionType>();
@@ -19,13 +20,16 @@ export class PlayerActions {
   static readonly playClicked = createAction()(PlayerActionType.PlayClicked);
   static readonly pauseClicked = createAction()(PlayerActionType.PauseClicked);
   static readonly likeSongClicked = createAction()(
-    PlayerActionType.LikeSongClicked
+    PlayerActionType.LikeSongClicked,
   );
   static readonly nextSongClicked = createAction()(
-    PlayerActionType.NextSongClicked
+    PlayerActionType.NextSongClicked,
   );
   static readonly previousSongClicked = createAction()(
-    PlayerActionType.PreviousSongClicked
+    PlayerActionType.PreviousSongClicked,
+  );
+  static readonly playbackStarted = createAction()(
+    PlayerActionType.PlaybackStarted,
   );
 }
 

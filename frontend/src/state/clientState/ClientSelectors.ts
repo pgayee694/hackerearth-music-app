@@ -10,6 +10,9 @@ export class ClientSelectors {
   static readonly getDevices = createPropSelector('devices');
   static readonly getSelectedDeviceId = createPropSelector('selectedDeviceId');
   static readonly getLocation = createPropSelector('location');
+  static readonly hasStartedPlayback = createPropSelector('hasStartedPlayback');
+  static readonly songLengths = createPropSelector('songLengths');
+  static readonly isQueuingSongs = createPropSelector('isQueuingSongs');
 
   static readonly isLoggedIn = createSelector(
     ClientSelectors.getAuth,
@@ -29,5 +32,10 @@ export class ClientSelectors {
   static readonly hasLocation = createSelector(
     ClientSelectors.getLocation,
     (location) => Boolean(location),
+  );
+
+  static readonly currSongLength = createSelector(
+    ClientSelectors.songLengths,
+    (lengths) => lengths[0] ?? 0,
   );
 }
