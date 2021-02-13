@@ -7,7 +7,12 @@ import {
   SpotifyRequest,
 } from '../models/spotify';
 import { SpotifyService } from '../services/spotify.service';
-import { SpotifyDeviceResponse, SpotifyMetadataResponse } from '@local/shared';
+import {
+  PlayerStatus,
+  SpotifyDeviceResponse,
+  SpotifyMetadataResponse,
+  SpotifyStatusRequest,
+} from '@local/shared';
 
 @Controller('spotify')
 export class SpotifyController {
@@ -25,6 +30,26 @@ export class SpotifyController {
     @Query('token') token: string,
   ): Promise<SpotifyDeviceResponse[]> {
     return this.spotifyService.getDevices(token);
+  }
+
+  @Post('status')
+  public async setStatus(@Body() params: SpotifyStatusRequest): Promise<void> {
+    switch (params.status) {
+      case PlayerStatus.Start:
+        await this.spotifyService.resume(params.token, params.deviceId);
+        break;
+      case PlayerStatus.Pause:
+        await this.spotifyService.pause(params.token, params.deviceId);
+        break;
+      case PlayerStatus.Skip:
+        await this.spotifyService.skip(params.token, params.deviceId);
+        break;
+      case PlayerStatus.Back:
+        await this.spotifyService.back(params.token, params.deviceId);
+        break;
+      default:
+        break;
+    }
   }
 
   @Post('queue')

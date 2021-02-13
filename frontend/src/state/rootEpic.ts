@@ -5,6 +5,7 @@ import { redirectToAuth } from './clientState/epics/redirectToAuth';
 import { requestLocation } from './clientState/epics/requestLocation';
 import { queueMoreSongs } from './clientState/epics/queueMoreSongs';
 import { startQueuingSongs } from './clientState/epics/startQueueingSongs';
+import { setPlayerStatus } from './playerState/epics/setPlayerStatus';
 
 export const rootEpic: Epic = combineEpics(
   fetchClientMetadata,
@@ -13,4 +14,5 @@ export const rootEpic: Epic = combineEpics(
   requestLocation,
   startQueuingSongs,
   queueMoreSongs,
+  setPlayerStatus,
 );
