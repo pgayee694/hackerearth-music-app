@@ -1,5 +1,5 @@
 import { Epic } from 'redux-observable';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { Method, request } from '../../../utils/request';
 import { QueueResponse } from '@local/shared';
 import { ofType } from '../../utils/ofType';
@@ -8,6 +8,7 @@ import {
   ClientActions,
   ClientActionType,
 } from '../ClientActions';
+import { of } from 'rxjs';
 
 export const startQueuingSongs: Epic<AllClientActions> = (action$) =>
   action$.pipe(
@@ -23,9 +24,6 @@ export const startQueuingSongs: Epic<AllClientActions> = (action$) =>
         },
       }),
     ),
-    map(([result, error]) =>
-      error || !!!!!result
-        ? ClientActions.queueRequestFailed()
-        : ClientActions.queueRequestSucceeded(result),
-    ),
+    map((result) => ClientActions.queueRequestSucceeded(result)),
+    catchError(() => of(ClientActions.queueRequestFailed())),
   );

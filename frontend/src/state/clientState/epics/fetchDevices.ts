@@ -1,4 +1,4 @@
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { Epic } from 'redux-observable';
 import { SpotifyDeviceResponse } from '@local/shared';
 import {
@@ -8,6 +8,7 @@ import {
 } from '../ClientActions';
 import { request } from '../../../utils/request';
 import { ofType } from '../../utils/ofType';
+import { of } from 'rxjs';
 
 export const fetchDevices: Epic<AllClientActions> = (action$) =>
   action$.pipe(
@@ -17,14 +18,13 @@ export const fetchDevices: Epic<AllClientActions> = (action$) =>
         `/spotify/devices?token=${action.payload.accessToken}`,
       ),
     ),
-    map(([devices, error]) =>
+    catchError(() => of([] as SpotifyDeviceResponse[])),
+    map((devices) =>
       ClientActions.devicesFetched(
-        error
-          ? []
-          : devices.map(({ name, id }) => ({
-              name,
-              id,
-            })),
+        devices.map(({ name, id }) => ({
+          name,
+          id,
+        })),
       ),
     ),
   );
