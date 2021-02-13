@@ -120,7 +120,7 @@ export class SpotifyService {
   public async skipTo(
     token: string,
     deviceId: string,
-    target: string,
+    targets: string[],
   ): Promise<void> {
     let curr: string = await this.http
       .get(`${this.config.spotifyApi}/me/player`, {
@@ -132,7 +132,7 @@ export class SpotifyService {
       )
       .toPromise();
 
-    while (curr != target) {
+    while (!targets.includes(curr)) {
       curr = await this.http
         .post(
           `${this.config.spotifyApi}/me/player/next`,

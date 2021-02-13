@@ -79,24 +79,21 @@ export class VibeService {
     }
 
     const recs = await this.spotifyService.getRecommendations(request.token, {
-      seed_genres: [Genres.Rap],
+      seed_genres: [Genres.Rock],
       target_valence: this.calculateValence(request.hour),
       target_danceability: this.calculateDanceability(request.hour),
       target_energy: this.calculateEnergy(weatherData),
     });
 
     const uris = recs.tracks.map((track) => track.uri);
+    console.log(uris);
     await this.spotifyService.queueSongs(request.token, request.deviceId, uris);
 
     if (isStart) {
       setTimeout(async () => {
-        await this.spotifyService.skipTo(
-          request.token,
-          request.deviceId,
-          uris[0],
-        );
+        await this.spotifyService.skipTo(request.token, request.deviceId, uris);
         await this.spotifyService.resume(request.token, request.deviceId);
-      }, 3000); // bc spotify sends response of having queued before it actually does
+      }, 1000); //spotify pls queue faster
     }
 
     return {
