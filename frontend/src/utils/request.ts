@@ -1,5 +1,4 @@
 import * as config from '../config.json';
-import { Attempt } from './Attempt';
 
 export enum Method {
   Get = 'GET',
@@ -15,8 +14,8 @@ export type RequestOptions = Omit<
 
 export function request<T = any>(
   url: string,
-  options?: RequestOptions
-): Promise<Attempt<T>> {
+  options?: RequestOptions,
+): Promise<T> {
   const apiUrl =
     process.env.NODE_ENV === 'development'
       ? `${config.api.local}${url}`
@@ -35,9 +34,8 @@ export function request<T = any>(
             'Content-Type': 'application/json',
           },
         } as any)
-      : options
+      : options,
   )
     .then((response) => response.json())
-    .then((value) => [value] as any)
-    .catch((error) => [null, error]);
+    .then((value) => value as T);
 }

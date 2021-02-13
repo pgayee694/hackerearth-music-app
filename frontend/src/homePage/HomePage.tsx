@@ -28,7 +28,8 @@ export function HomePage() {
     if (!isPlayerOpen) {
       dispatch(PlayerActions.openPlayer());
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   useEffect(() => {
     if (
@@ -82,7 +83,7 @@ export function HomePage() {
     if (hasStartedPlayback) {
       dispatch(PlayerActions.playbackStarted());
     }
-  }, [hasStartedPlayback]);
+  }, [dispatch, hasStartedPlayback]);
 
   return (
     <Player>
@@ -99,6 +100,8 @@ export function HomePage() {
                 hour: getCurrentHour(),
                 token: auth?.accessToken,
               },
+            }).catch(() => {
+              console.log('Vibe request failed');
             })
           }
         >
