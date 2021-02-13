@@ -190,6 +190,21 @@ export class SpotifyService {
       .toPromise();
   }
 
+  public async back(token: string, deviceId: string): Promise<void> {
+    await this.http
+      .post(
+        `${this.config.spotifyApi}/me/player/previous`,
+        {},
+        {
+          headers: this.createAuthHeaders(token),
+          params: {
+            device_id: deviceId,
+          },
+        },
+      )
+      .toPromise();
+  }
+
   public async pause(token: string, deviceId: string): Promise<void> {
     await this.http
       .put(
