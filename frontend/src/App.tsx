@@ -18,7 +18,7 @@ export function App() {
       <VStack height="100%">
         <Header />
         <ErrorBoundary>
-          <BrowserRouter>
+          <BrowserRouter basename="/hackerearth-music-app">
             <Switch>
               <Route path="/redirect" component={RedirectPage} />
               <Route path="/">
