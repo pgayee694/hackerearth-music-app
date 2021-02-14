@@ -7,6 +7,7 @@ import { WeatherToGenreMap } from '../models/weather-to-genre-map';
 import { WeatherToGenreMapToken } from '../providers/weather-to-genre-map.provider';
 import { SpotifyService } from './spotify.service';
 import { WeatherService } from './weather.service';
+import { BingService } from './bing.service';
 
 @Injectable()
 export class VibeService {
@@ -15,6 +16,7 @@ export class VibeService {
     @Inject(SpotifyService) private readonly spotifyService: SpotifyService,
     @Inject(ParameterCalculatorService)
     private readonly parameterCalculator: ParameterCalculatorService,
+    @Inject(BingService) private readonly bingService: BingService,
   ) {}
 
   public async queue(
@@ -24,10 +26,12 @@ export class VibeService {
     const weatherData = await this.weatherService.getCurrentWeather(
       request.location,
     );
+    const feature = await this.bingService.getNearbyGeography(request.location);
 
     const recommendationParameters = this.parameterCalculator.calculate(
       request.hour,
       weatherData,
+      feature,
     );
 
     if (isStart) {
