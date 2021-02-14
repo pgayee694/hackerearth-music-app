@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/vibe/static/css/main.1521bdb0.chunk.css",
+    "main.js": "/vibe/static/js/main.80e7b1f8.chunk.js",
+    "main.js.map": "/vibe/static/js/main.80e7b1f8.chunk.js.map",
+    "runtime-main.js": "/vibe/static/js/runtime-main.99882d42.js",
+    "runtime-main.js.map": "/vibe/static/js/runtime-main.99882d42.js.map",
+    "static/js/2.415bc59a.chunk.js": "/vibe/static/js/2.415bc59a.chunk.js",
+    "static/js/2.415bc59a.chunk.js.map": "/vibe/static/js/2.415bc59a.chunk.js.map",
+    "static/js/3.4ad481e6.chunk.js": "/vibe/static/js/3.4ad481e6.chunk.js",
+    "static/js/3.4ad481e6.chunk.js.map": "/vibe/static/js/3.4ad481e6.chunk.js.map",
+    "index.html": "/vibe/index.html",
+    "service-worker.js": "/vibe/service-worker.js",
+    "service-worker.js.map": "/vibe/service-worker.js.map",
+    "static/css/main.1521bdb0.chunk.css.map": "/vibe/static/css/main.1521bdb0.chunk.css.map",
+    "static/js/2.415bc59a.chunk.js.LICENSE.txt": "/vibe/static/js/2.415bc59a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.99882d42.js",
+    "static/js/2.415bc59a.chunk.js",
+    "static/css/main.1521bdb0.chunk.css",
+    "static/js/main.80e7b1f8.chunk.js"
+  ]
+}
