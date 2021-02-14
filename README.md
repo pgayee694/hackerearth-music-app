@@ -39,7 +39,13 @@ BING_API_KEY
 
 ## Install dependencies
 
-Install dependencies in the root folder, as well as the `frontend` and `backend` subfolders:
+Build the `./shared` directory (contains shared types):
+
+```
+cd ./shared && yarn install && yarn build && cd ..
+```
+
+Install dependencies in the root folder, as well as the `./frontend` and `./backend` subfolders:
 
 ```
 yarn install && cd ./frontend && yarn install && cd ../backend && yarn install && cd ..
@@ -49,7 +55,7 @@ yarn install && cd ./frontend && yarn install && cd ../backend && yarn install &
 
 Be sure to start two new terminal sessions so that the newly added environment variables will be present.
 
-From the two separate terminal sessions start the `frontend` and `backend` applications, respectively:
+From the two separate terminal sessions start the `./frontend` and `./backend` applications, respectively:
 
 ```
 cd ./frontend && yarn start
