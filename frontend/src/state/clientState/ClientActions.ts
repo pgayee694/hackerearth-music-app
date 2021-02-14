@@ -58,7 +58,7 @@ export class ClientActions {
   static readonly clientAuthorized = createAction<ClientAuth>()(
     ClientActionType.ClientAuthorized,
   );
-  static readonly startPlayback = createAction<VibeRequest>()(
+  static readonly startPlayback = createAction()(
     ClientActionType.StartPlayback,
   );
   static readonly queueRequestSucceeded = createAction<QueueResponse>()(
@@ -67,9 +67,7 @@ export class ClientActions {
   static readonly queueRequestFailed = createAction()(
     ClientActionType.QueueRequestFailed,
   );
-  static readonly queueSongs = createAction<VibeRequest>()(
-    ClientActionType.QueueMoreSongs,
-  );
+  static readonly queueSongs = createAction()(ClientActionType.QueueMoreSongs);
   static readonly songFinished = createAction()(ClientActionType.SongFinished);
 }
 
