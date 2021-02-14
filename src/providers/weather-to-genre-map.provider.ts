@@ -51,7 +51,15 @@ export const WeatherToGenreMapProvider: Provider<WeatherToGenreMap> = {
     ],
     [
       WeatherType.Rain,
-      [Genres.RainyDay, Genres.Techno, Genres.Blues, Genres.Sad, Genres.Emo],
+      [
+        Genres.RainyDay,
+        Genres.Techno,
+        Genres.Blues,
+        Genres.Sad,
+        Genres.Ambient,
+        Genres.Chill,
+        Genres.Chillhop,
+      ],
     ],
     [
       WeatherType.Snow,

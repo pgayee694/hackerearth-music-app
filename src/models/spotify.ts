@@ -22,6 +22,7 @@ export enum Genres {
   ChicagoHouse = 'chicago-house',
   Children = 'children',
   Chill = 'chill',
+  Chillhop = 'chillhop',
   Classical = 'classical',
   Club = 'club',
   Comedy = 'comedy',
