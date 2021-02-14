@@ -13,6 +13,8 @@ import { TimeOfDayToGenreMapToken } from 'src/providers/time-of-day-to-genre-map
 import { TimeOfDayToGenreMap } from 'src/models/time-of-day-to-genre-map';
 import { Feature } from 'src/models/features';
 import { WeatherType } from 'src/models/weather-type';
+import { FeatureToGenreMapToken } from 'src/providers/feature-to-genre-map.provider';
+import { FeatureToGenreMap } from 'src/models/feature-to-genre-map';
 
 @Injectable()
 export class ParameterCalculatorService {
@@ -25,6 +27,8 @@ export class ParameterCalculatorService {
     private readonly seasonToGenreMap: SeasonToGenreMap,
     @Inject(TimeOfDayToGenreMapToken)
     private readonly timeOfDayToGenreMap: TimeOfDayToGenreMap,
+    @Inject(FeatureToGenreMapToken)
+    private readonly featureToGenreMap: FeatureToGenreMap,
   ) {}
 
   private calculateValence(hour: number): [min: number, max: number] {
@@ -116,6 +120,7 @@ export class ParameterCalculatorService {
         this.calculateSeasonality(weatherData.coord.lat),
       )!,
       ...this.timeOfDayToGenreMap.get(this.calculateTimeOfDay(hour))!,
+      ...this.featureToGenreMap.get(feature)!,
     ];
 
     const seed_genres = shuffleArray(possibleGenres).slice(0, 3);
