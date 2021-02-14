@@ -61,25 +61,7 @@ export function HomePage() {
     <Player>
       <DeviceSelect isOpen={!hasSelectedDevice} />
       <LocationPrompt isOpen={hasSelectedDevice && !hasLocation} />
-      <Box className="Home" width="100%" height="100%" p="4">
-        <Button
-          onClick={() =>
-            request('/vibe', {
-              method: Method.Post,
-              body: {
-                location,
-                deviceId,
-                hour: getCurrentHour(),
-                token: auth?.accessToken,
-              },
-            }).catch(() => {
-              console.log('Vibe request failed');
-            })
-          }
-        >
-          Test api thing
-        </Button>
-      </Box>
+      <Box className="Home" width="100%" height="100%" p="4"></Box>
     </Player>
   );
 }

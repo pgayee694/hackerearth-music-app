@@ -36,6 +36,6 @@ export class ClientSelectors {
 
   static readonly currSongLength = createSelector(
     ClientSelectors.songLengths,
-    (lengths) => lengths[0] ?? 0,
+    (lengths) => (lengths ? lengths[0] : 0),
   );
 }
