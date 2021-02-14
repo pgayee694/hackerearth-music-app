@@ -1,16 +1,14 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
-import { SpotifyMetadataResponse, SpotifyDeviceResponse } from '@local/shared';
+import { SpotifyMetadataResponse, SpotifyDeviceResponse } from '../shared';
 import { of } from 'rxjs';
 import * as Rx from 'rxjs/operators';
 import { EnvironmentToken } from '../providers/environment.provider';
 import {
   RecommendationsRequest,
   RecommendationsResponse,
-  SimplifiedTrack,
 } from '../models/spotify';
 import { ConfigToken } from '../providers/config.provider';
 import { Config } from '../models/config';
-import { response } from 'express';
 
 @Injectable()
 export class SpotifyService {

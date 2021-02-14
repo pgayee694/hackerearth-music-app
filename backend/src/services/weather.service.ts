@@ -1,7 +1,7 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
 import { of } from 'rxjs';
 import * as Rx from 'rxjs/operators';
-import { Coordinate } from '@local/shared';
+import { Coordinate } from '../shared';
 import { Config } from '../models/config';
 import { ConfigToken } from '../providers/config.provider';
 import { EnvironmentToken } from '../providers/environment.provider';

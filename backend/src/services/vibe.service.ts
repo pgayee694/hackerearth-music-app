@@ -1,4 +1,4 @@
-import { VibeRequest, QueueResponse } from '@local/shared';
+import { VibeRequest, QueueResponse } from '../shared';
 import { Inject, Injectable } from '@nestjs/common';
 import { ParameterCalculatorService } from './parameter-calculator.service';
 import { SpotifyService } from './spotify.service';

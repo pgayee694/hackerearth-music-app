@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { QueueResponse, VibeRequest } from '@local/shared';
+import { QueueResponse, VibeRequest } from '../shared';
 import { VibeService } from '../services/vibe.service';
 
 @Controller('vibe')

@@ -1,4 +1,4 @@
-import { Coordinate } from '@local/shared';
+import { Coordinate } from '../shared';
 import { HttpService, Inject, Injectable } from '@nestjs/common';
 import { Config } from '../models/config';
 import { Feature } from '../models/features';

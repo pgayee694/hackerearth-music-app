@@ -12,7 +12,7 @@ import {
   SpotifyDeviceResponse,
   SpotifyMetadataResponse,
   SpotifyStatusRequest,
-} from '@local/shared';
+} from '../shared';
 
 @Controller('spotify')
 export class SpotifyController {
