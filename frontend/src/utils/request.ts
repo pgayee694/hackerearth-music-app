@@ -35,7 +35,11 @@ export function request<T = any>(
           },
         } as any)
       : options,
-  )
-    .then((response) => response.json())
-    .then((value) => value as T);
+  ).then(async (response) => {
+    if (response.ok) {
+      return (await response.json()) as T;
+    }
+
+    throw new Error(response.statusText);
+  });
 }
