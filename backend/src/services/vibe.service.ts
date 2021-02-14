@@ -8,6 +8,8 @@ import { WeatherToGenreMapToken } from '../providers/weather-to-genre-map.provid
 import { SpotifyService } from './spotify.service';
 import { WeatherService } from './weather.service';
 import { BingService } from './bing.service';
+import * as Rx from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
 export class VibeService {
@@ -45,8 +47,13 @@ export class VibeService {
     );
 
     const uris = recs.tracks.map((track) => track.uri);
-    console.log(uris);
-    await this.spotifyService.queueSongs(request.token, request.deviceId, uris);
+    if (uris.length > 0) {
+      await this.spotifyService.queueSongs(
+        request.token,
+        request.deviceId,
+        uris,
+      );
+    }
 
     if (isStart) {
       setTimeout(async () => {

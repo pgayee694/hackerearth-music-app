@@ -12,6 +12,9 @@ import { hourToDay } from 'src/utils/hourToDay';
 import { TimeOfDayToGenreMapToken } from 'src/providers/time-of-day-to-genre-map.provider';
 import { TimeOfDayToGenreMap } from 'src/models/time-of-day-to-genre-map';
 import { Feature } from 'src/models/features';
+import { WeatherType } from 'src/models/weather-type';
+import { FeatureToGenreMapToken } from 'src/providers/feature-to-genre-map.provider';
+import { FeatureToGenreMap } from 'src/models/feature-to-genre-map';
 
 @Injectable()
 export class ParameterCalculatorService {
@@ -24,6 +27,8 @@ export class ParameterCalculatorService {
     private readonly seasonToGenreMap: SeasonToGenreMap,
     @Inject(TimeOfDayToGenreMapToken)
     private readonly timeOfDayToGenreMap: TimeOfDayToGenreMap,
+    @Inject(FeatureToGenreMapToken)
+    private readonly featureToGenreMap: FeatureToGenreMap,
   ) {}
 
   private calculateValence(hour: number): [min: number, max: number] {
@@ -48,10 +53,6 @@ export class ParameterCalculatorService {
     ];
   }
 
-  private calculateDanceability(hour: number): number {
-    return hourToDay(hour);
-  }
-
   private calculateEnergy(weather: WeatherResponse): number {
     const tempDelta = Math.min(
       1,
@@ -61,6 +62,13 @@ export class ParameterCalculatorService {
     const windSpeedFactor = Math.min(1, Math.log2(1 + weather.wind.speed / 50));
 
     return 0.3 + (0.6 * (tempDelta + windSpeedFactor)) / 2;
+  }
+
+  private calculateLoudness(hour: number): [min: number, max: number] {
+    return [
+      Math.max(-30, -0.2 * Math.pow(hour - 10, 2) - 20),
+      Math.min(0, -0.1 * Math.pow(hour - 13, 2) + 2),
+    ];
   }
 
   private calculateSeasonality(latitude: number): Season {
@@ -112,21 +120,21 @@ export class ParameterCalculatorService {
         this.calculateSeasonality(weatherData.coord.lat),
       )!,
       ...this.timeOfDayToGenreMap.get(this.calculateTimeOfDay(hour))!,
+      ...this.featureToGenreMap.get(feature)!,
     ];
 
     const seed_genres = shuffleArray(possibleGenres).slice(0, 3);
-    const [min_tempo, max_tempo] = this.calculateTempo(hour);
     const [min_valence, max_valence] = this.calculateValence(hour);
+    const [min_loudness, max_loudness] = this.calculateLoudness(hour);
 
     return {
       max_valence,
       min_valence,
-      min_tempo,
-      max_tempo,
+      min_loudness,
+      max_loudness,
       seed_genres,
       limit: 5,
       min_energy: this.calculateEnergy(weatherData),
-      min_danceability: this.calculateDanceability(hour),
     };
   }
 }

@@ -11,6 +11,7 @@ import { ParameterCalculatorService } from './services/parameter-calculator.serv
 import { SeasonToGenreMapProvider } from './providers/season-to-genre-map.provider';
 import { TimeOfDayToGenreMapProvider } from './providers/time-of-day-to-genre-map.provider';
 import { BingService } from './services/bing.service';
+import { FeatureToGenreMapProvider } from './providers/feature-to-genre-map.provider';
 
 @Module({
   imports: [HttpModule],
@@ -26,6 +27,7 @@ import { BingService } from './services/bing.service';
     TimeOfDayToGenreMapProvider,
     ParameterCalculatorService,
     BingService,
+    FeatureToGenreMapProvider,
   ],
 })
 export class AppModule {}
