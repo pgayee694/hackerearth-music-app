@@ -8,6 +8,8 @@ import { WeatherToGenreMapToken } from '../providers/weather-to-genre-map.provid
 import { SpotifyService } from './spotify.service';
 import { WeatherService } from './weather.service';
 import { BingService } from './bing.service';
+import * as Rx from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
 export class VibeService {
@@ -23,10 +25,14 @@ export class VibeService {
     request: VibeRequest,
     isStart = false,
   ): Promise<QueueResponse> {
+    console.log(request);
+
     const weatherData = await this.weatherService.getCurrentWeather(
       request.location,
     );
     const feature = await this.bingService.getNearbyGeography(request.location);
+
+    console.log('got weather and geo');
 
     const recommendationParameters = this.parameterCalculator.calculate(
       request.hour,
@@ -34,22 +40,39 @@ export class VibeService {
       feature,
     );
 
+    console.log(recommendationParameters);
+
     if (isStart) {
+      console.log('about to set');
       await this.spotifyService.setDevice(request.token, request.deviceId);
+      console.log('about to pause');
       await this.spotifyService.pause(request.token, request.deviceId);
     }
+
+    console.log('getting recs');
 
     const recs = await this.spotifyService.getRecommendations(
       request.token,
       recommendationParameters,
     );
 
+    console.log('got recommendations');
+
     const uris = recs.tracks.map((track) => track.uri);
     console.log(uris);
-    await this.spotifyService.queueSongs(request.token, request.deviceId, uris);
+    if (uris.length > 0) {
+      await this.spotifyService.queueSongs(
+        request.token,
+        request.deviceId,
+        uris,
+      );
+    }
+
+    console.log('queued');
 
     if (isStart) {
       setTimeout(async () => {
+        console.log('skipping');
         await this.spotifyService.skipTo(request.token, request.deviceId, uris);
         await this.spotifyService.resume(request.token, request.deviceId);
       }, 1000); //spotify pls queue faster
