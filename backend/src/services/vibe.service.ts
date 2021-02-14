@@ -1,15 +1,9 @@
 import { VibeRequest, QueueResponse } from '@local/shared';
 import { Inject, Injectable } from '@nestjs/common';
 import { ParameterCalculatorService } from './parameter-calculator.service';
-import { Genres, RecommendationsResponse } from 'src/models/spotify';
-import { WeatherResponse } from 'src/models/weather-response';
-import { WeatherToGenreMap } from '../models/weather-to-genre-map';
-import { WeatherToGenreMapToken } from '../providers/weather-to-genre-map.provider';
 import { SpotifyService } from './spotify.service';
 import { WeatherService } from './weather.service';
 import { BingService } from './bing.service';
-import * as Rx from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Injectable()
 export class VibeService {

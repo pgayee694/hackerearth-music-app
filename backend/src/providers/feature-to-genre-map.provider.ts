@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
-import { FeatureToGenreMap } from 'src/models/feature-to-genre-map';
-import { Feature } from 'src/models/features';
-import { Genres } from 'src/models/spotify';
+import { FeatureToGenreMap } from '../models/feature-to-genre-map';
+import { Feature } from '../models/features';
+import { Genres } from '../models/spotify';
 
 export const FeatureToGenreMapToken = Symbol('FeatureToGenreMapToken');
 

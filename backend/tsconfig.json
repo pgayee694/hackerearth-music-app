@@ -13,5 +13,6 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true
-  }
+  },
+  "references": [{ "path": "../shared" }]
 }

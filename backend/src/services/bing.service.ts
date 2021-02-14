@@ -1,9 +1,9 @@
 import { Coordinate } from '@local/shared';
 import { HttpService, Inject, Injectable } from '@nestjs/common';
-import { Config } from 'src/models/config';
-import { Feature } from 'src/models/features';
-import { ConfigToken } from 'src/providers/config.provider';
-import { EnvironmentToken } from 'src/providers/environment.provider';
+import { Config } from '../models/config';
+import { Feature } from '../models/features';
+import { ConfigToken } from '../providers/config.provider';
+import { EnvironmentToken } from '../providers/environment.provider';
 import * as Rx from 'rxjs/operators';
 
 @Injectable()

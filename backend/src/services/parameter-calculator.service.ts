@@ -8,13 +8,12 @@ import { Season } from '../models/season';
 import { SeasonToGenreMapToken } from '../providers/season-to-genre-map.provider';
 import { SeasonToGenreMap } from '../models/season-to-genre-map';
 import { TimeOfDay } from '../models/time-of-day';
-import { hourToDay } from 'src/utils/hourToDay';
-import { TimeOfDayToGenreMapToken } from 'src/providers/time-of-day-to-genre-map.provider';
-import { TimeOfDayToGenreMap } from 'src/models/time-of-day-to-genre-map';
-import { Feature } from 'src/models/features';
-import { WeatherType } from 'src/models/weather-type';
-import { FeatureToGenreMapToken } from 'src/providers/feature-to-genre-map.provider';
-import { FeatureToGenreMap } from 'src/models/feature-to-genre-map';
+import { hourToDay } from '../utils/hourToDay';
+import { TimeOfDayToGenreMapToken } from '../providers/time-of-day-to-genre-map.provider';
+import { TimeOfDayToGenreMap } from '../models/time-of-day-to-genre-map';
+import { Feature } from '../models/features';
+import { FeatureToGenreMapToken } from '../providers/feature-to-genre-map.provider';
+import { FeatureToGenreMap } from '../models/feature-to-genre-map';
 
 @Injectable()
 export class ParameterCalculatorService {
