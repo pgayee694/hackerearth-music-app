@@ -86,7 +86,7 @@ export class SpotifyService {
       .pipe(Rx.map((response) => response.data.is_playing))
       .toPromise<boolean>();
 
-    for (let i = 0; i < 30 || isPlaying; i++) {
+    for (let i = 0; i < 30 && isPlaying; i++) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       isPlaying = await this.http
         .post<boolean>(
@@ -130,7 +130,7 @@ export class SpotifyService {
       )
       .toPromise();
 
-    while (!targets.includes(curr)) {
+    for (let i = 0; i < 30 && !targets.includes(curr); i++) {
       curr = await this.http
         .post(
           `${this.config.spotifyApi}/me/player/next`,
