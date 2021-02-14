@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/vibe/static/css/main.1521bdb0.chunk.css",
-    "main.js": "/vibe/static/js/main.80e7b1f8.chunk.js",
-    "main.js.map": "/vibe/static/js/main.80e7b1f8.chunk.js.map",
+    "main.js": "/vibe/static/js/main.0172a142.chunk.js",
+    "main.js.map": "/vibe/static/js/main.0172a142.chunk.js.map",
     "runtime-main.js": "/vibe/static/js/runtime-main.99882d42.js",
     "runtime-main.js.map": "/vibe/static/js/runtime-main.99882d42.js.map",
     "static/js/2.415bc59a.chunk.js": "/vibe/static/js/2.415bc59a.chunk.js",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.99882d42.js",
     "static/js/2.415bc59a.chunk.js",
     "static/css/main.1521bdb0.chunk.css",
-    "static/js/main.80e7b1f8.chunk.js"
+    "static/js/main.0172a142.chunk.js"
   ]
 }
