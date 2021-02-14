@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/hackerearth-music-app/static/css/main.1521bdb0.chunk.css",
-    "main.js": "/hackerearth-music-app/static/js/main.e1aa5b74.chunk.js",
-    "main.js.map": "/hackerearth-music-app/static/js/main.e1aa5b74.chunk.js.map",
-    "runtime-main.js": "/hackerearth-music-app/static/js/runtime-main.57729230.js",
-    "runtime-main.js.map": "/hackerearth-music-app/static/js/runtime-main.57729230.js.map",
-    "static/js/2.415bc59a.chunk.js": "/hackerearth-music-app/static/js/2.415bc59a.chunk.js",
-    "static/js/2.415bc59a.chunk.js.map": "/hackerearth-music-app/static/js/2.415bc59a.chunk.js.map",
-    "static/js/3.4ad481e6.chunk.js": "/hackerearth-music-app/static/js/3.4ad481e6.chunk.js",
-    "static/js/3.4ad481e6.chunk.js.map": "/hackerearth-music-app/static/js/3.4ad481e6.chunk.js.map",
-    "index.html": "/hackerearth-music-app/index.html",
-    "service-worker.js": "/hackerearth-music-app/service-worker.js",
-    "service-worker.js.map": "/hackerearth-music-app/service-worker.js.map",
-    "static/css/main.1521bdb0.chunk.css.map": "/hackerearth-music-app/static/css/main.1521bdb0.chunk.css.map",
-    "static/js/2.415bc59a.chunk.js.LICENSE.txt": "/hackerearth-music-app/static/js/2.415bc59a.chunk.js.LICENSE.txt"
+    "main.css": "/vibe/static/css/main.b0674f59.chunk.css",
+    "main.js": "/vibe/static/js/main.77cc656f.chunk.js",
+    "main.js.map": "/vibe/static/js/main.77cc656f.chunk.js.map",
+    "runtime-main.js": "/vibe/static/js/runtime-main.99882d42.js",
+    "runtime-main.js.map": "/vibe/static/js/runtime-main.99882d42.js.map",
+    "static/js/2.313fd6a2.chunk.js": "/vibe/static/js/2.313fd6a2.chunk.js",
+    "static/js/2.313fd6a2.chunk.js.map": "/vibe/static/js/2.313fd6a2.chunk.js.map",
+    "static/js/3.4ad481e6.chunk.js": "/vibe/static/js/3.4ad481e6.chunk.js",
+    "static/js/3.4ad481e6.chunk.js.map": "/vibe/static/js/3.4ad481e6.chunk.js.map",
+    "index.html": "/vibe/index.html",
+    "service-worker.js": "/vibe/service-worker.js",
+    "service-worker.js.map": "/vibe/service-worker.js.map",
+    "static/css/main.b0674f59.chunk.css.map": "/vibe/static/css/main.b0674f59.chunk.css.map",
+    "static/js/2.313fd6a2.chunk.js.LICENSE.txt": "/vibe/static/js/2.313fd6a2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.57729230.js",
-    "static/js/2.415bc59a.chunk.js",
-    "static/css/main.1521bdb0.chunk.css",
-    "static/js/main.e1aa5b74.chunk.js"
+    "static/js/runtime-main.99882d42.js",
+    "static/js/2.313fd6a2.chunk.js",
+    "static/css/main.b0674f59.chunk.css",
+    "static/js/main.77cc656f.chunk.js"
   ]
 }
