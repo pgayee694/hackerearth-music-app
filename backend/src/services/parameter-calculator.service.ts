@@ -11,6 +11,7 @@ import { TimeOfDay } from '../models/time-of-day';
 import { hourToDay } from 'src/utils/hourToDay';
 import { TimeOfDayToGenreMapToken } from 'src/providers/time-of-day-to-genre-map.provider';
 import { TimeOfDayToGenreMap } from 'src/models/time-of-day-to-genre-map';
+import { Feature } from 'src/models/features';
 
 @Injectable()
 export class ParameterCalculatorService {
@@ -101,6 +102,7 @@ export class ParameterCalculatorService {
   public calculate(
     hour: number,
     weatherData: WeatherResponse,
+    feature: Feature,
   ): Partial<RecommendationsRequest> {
     const possibleGenres = [
       ...weatherData.weather.flatMap(

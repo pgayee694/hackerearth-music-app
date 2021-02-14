@@ -10,6 +10,7 @@ import { WeatherToGenreMapProvider } from './providers/weather-to-genre-map.prov
 import { ParameterCalculatorService } from './services/parameter-calculator.service';
 import { SeasonToGenreMapProvider } from './providers/season-to-genre-map.provider';
 import { TimeOfDayToGenreMapProvider } from './providers/time-of-day-to-genre-map.provider';
+import { BingService } from './services/bing.service';
 
 @Module({
   imports: [HttpModule],
@@ -24,6 +25,7 @@ import { TimeOfDayToGenreMapProvider } from './providers/time-of-day-to-genre-ma
     SeasonToGenreMapProvider,
     TimeOfDayToGenreMapProvider,
     ParameterCalculatorService,
+    BingService,
   ],
 })
 export class AppModule {}
