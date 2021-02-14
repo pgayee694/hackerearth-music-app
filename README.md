@@ -1,5 +1,7 @@
 # Local Development Setup
 
+Note that due to Spotify API restrictions, this application only works for Spotify premium members.
+
 ## Setup Spotify API integration
 
 Register a Spotify app at https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app.
