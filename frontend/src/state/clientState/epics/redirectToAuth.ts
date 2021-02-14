@@ -12,7 +12,7 @@ export const redirectToAuth: Epic<AllClientActions> = (action$) =>
     tap((action) =>
       redirect(config.auth, {
         client_id: action.payload,
-        redirect_uri: `${window.location.origin}/redirect`,
+        redirect_uri: `${window.location.href}redirect`,
         response_type: 'token',
         scope: [
           'app-remote-control',

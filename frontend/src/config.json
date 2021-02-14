@@ -2,6 +2,6 @@
   "auth": "https://accounts.spotify.com/authorize",
   "api": {
     "local": "http://localhost:3001",
-    "prod": "http://localhost:3001"
+    "prod": "https://vacationers-improvd-beats-eng.herokuapp.com"
   }
 }
